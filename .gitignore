@@ -1,0 +1,33 @@
+### Visual Paradigm ###
+*.vpp.bak
+*.log
+.vpsett/
+# Se esporti report in HTML, ignora la cartella di output se non necessaria
+/vp_reports/
+
+### Java (General) ###
+*.class
+*.jar
+*.war
+*.ear
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+out/
+gen/
+
+### Maven/Gradle (se li usi per Java) ###
+target/
+build/
+.gradle/
+
+### Bootstrap / Web ###
+# Se usi npm per gestire Bootstrap
+node_modules/
+.sass-cache/
+dist/
+
+### OS generico ###
+.DS_Store
+Thumbs.db
