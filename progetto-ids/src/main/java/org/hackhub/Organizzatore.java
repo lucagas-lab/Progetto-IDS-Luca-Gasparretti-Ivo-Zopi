@@ -10,8 +10,8 @@ public class Organizzatore extends UtenteAutenticato{
         super(id, nome, cognome, email, password);
     }
 
-    public Hackathon creaHackathon(String nomeHackathon, LocalDateTime inizio, LocalDateTime fine, Double premio, String regolamento){
-        Hackathon nuovoHackathon = new Hackathon(null, nomeHackathon, inizio, fine, premio, StatoHackathon.IN_ISCRIZIONE);
+    public Hackathon creaHackathon(String nomeHackathon, LocalDateTime inizio, LocalDateTime fine, Double premio, Regolamento regolamento){
+        Hackathon nuovoHackathon = new Hackathon(null, nomeHackathon, inizio, fine, premio, regolamento, StatoHackathon.IN_ISCRIZIONE);
         System.out.println("Hackathon"+ nomeHackathon + "creato con successo");
         return nuovoHackathon;
     }

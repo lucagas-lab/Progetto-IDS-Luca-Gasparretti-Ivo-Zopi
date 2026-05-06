@@ -8,6 +8,7 @@ public class Hackathon {
     private LocalDateTime dataInizio;
     private LocalDateTime dataFine;
     private Double premio;
+    private Regolamento regolamento;
     private StatoHackathon stato;
 
     private java.util.List<Team> teamIscritti= new java.util.ArrayList<>();
@@ -15,12 +16,13 @@ public class Hackathon {
 
     public Hackathon(){}
 
-    public Hackathon(Long id, String nome, LocalDateTime dataInizio, LocalDateTime dataFine, Double premio, StatoHackathon stato){
+    public Hackathon(Long id, String nome, LocalDateTime dataInizio, LocalDateTime dataFine, Double premio, Regolamento regolamento, StatoHackathon stato){
         this.id=id;
         this.nome= nome;
         this.dataInizio=dataInizio;
         this.dataFine=dataFine;
         this.premio=premio;
+        this.regolamento=regolamento;
         this.stato=stato;
     }
 
@@ -57,6 +59,13 @@ public class Hackathon {
     }
     public void setPremio(Double premio){
         this.premio = premio;
+    }
+
+    public Regolamento getRegolamento(){
+        return regolamento;
+    }
+    public void setRegolamento(Regolamento regolamento){
+        this.regolamento = regolamento;
     }
 
     public StatoHackathon getStato(){
