@@ -1,14 +1,13 @@
-package org.example;
+package org.hackhub;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Hackathon {
     private Long id;
-    private String nomeHackathon;
+    private String nome;
     private LocalDateTime dataInizio;
     private LocalDateTime dataFine;
     private Double premio;
-    private String regolamento;
     private StatoHackathon stato;
 
     private java.util.List<Team> teamIscritti= new java.util.ArrayList<>();
@@ -16,13 +15,12 @@ public class Hackathon {
 
     public Hackathon(){}
 
-    public Hackathon(Long id, String nome, LocalDateTime dataInizio, LocalDateTime dataFine, Double premio, String regolamento, StatoHackathon stato){
+    public Hackathon(Long id, String nome, LocalDateTime dataInizio, LocalDateTime dataFine, Double premio, StatoHackathon stato){
         this.id=id;
-        this.nomeHackathon=nome;
+        this.nome= nome;
         this.dataInizio=dataInizio;
         this.dataFine=dataFine;
         this.premio=premio;
-        this.regolamento=regolamento;
         this.stato=stato;
     }
 
@@ -34,10 +32,10 @@ public class Hackathon {
     }
 
     public String getNome(){
-        return nomeHackathon;
+        return nome;
     }
     public void setNome(String nome){
-        this.nomeHackathon = nome;
+        this.nome = nome;
     }
 
     public LocalDateTime getDataInizio(){
@@ -59,13 +57,6 @@ public class Hackathon {
     }
     public void setPremio(Double premio){
         this.premio = premio;
-    }
-
-    public String getRegolamento(){
-        return regolamento;
-    }
-    public void setRegolamento(String regolamento){
-        this.regolamento = regolamento;
     }
 
     public StatoHackathon getStato(){

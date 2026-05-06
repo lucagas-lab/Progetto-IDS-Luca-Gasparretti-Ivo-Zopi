@@ -1,4 +1,4 @@
-package org.example;
+package org.hackhub;
 
 public class Utente extends UtenteAutenticato{
     public Utente(){}

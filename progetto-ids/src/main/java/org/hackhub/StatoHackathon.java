@@ -1,4 +1,4 @@
-package org.example;
+package org.hackhub;
 
 public enum StatoHackathon {
     IN_ISCRIZIONE,

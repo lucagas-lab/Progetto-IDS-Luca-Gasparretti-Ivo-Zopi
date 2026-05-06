@@ -1,4 +1,4 @@
-package org.example;
+package org.hackhub;
 
 public abstract class UtenteAutenticato {
     private Long id;
@@ -57,6 +57,9 @@ public abstract class UtenteAutenticato {
             System.out.println(hackathon);
         }
     }
+
+
+    public void consultaElencoHackathon(){}
 
     public void visualizzaRegolamento(Hackathon hackathon, Long id){
         if(hackathon == null){

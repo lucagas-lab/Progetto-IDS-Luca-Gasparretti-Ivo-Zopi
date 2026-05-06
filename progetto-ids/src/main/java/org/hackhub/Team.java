@@ -1,4 +1,4 @@
-package org.example;
+package org.hackhub;
 import java.util.List;
 
 public class Team {
@@ -13,7 +13,7 @@ public class Team {
         this.id= id;
         this.nomeTeam= nomeTeam;
     }
-    public Long getId(){
+    public Long getIdTeam(){
         return id;
     }
 
