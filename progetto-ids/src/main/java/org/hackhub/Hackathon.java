@@ -1,6 +1,7 @@
 package org.hackhub;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Hackathon {
     private Long id;
@@ -11,8 +12,8 @@ public class Hackathon {
     private Regolamento regolamento;
     private StatoHackathon stato;
 
-    private java.util.List<Team> teamIscritti= new java.util.ArrayList<>();
-    private java.util.List<Hackathon> hackathon= new java.util.ArrayList<>();
+    private List<Team> teamIscritti= new ArrayList<>();
+    private List<Hackathon> hackathon= new ArrayList<>();
 
     public Hackathon(){}
 

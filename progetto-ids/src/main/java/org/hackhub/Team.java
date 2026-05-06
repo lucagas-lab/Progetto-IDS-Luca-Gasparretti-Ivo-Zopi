@@ -1,11 +1,12 @@
 package org.hackhub;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Team {
     private Long id;
     private String nomeTeam;
 
-    private java.util.List<Utente> utenti= new java.util.ArrayList<>();
+    private List<Utente> utenti= new ArrayList<>();
 
     public Team(){}
 
