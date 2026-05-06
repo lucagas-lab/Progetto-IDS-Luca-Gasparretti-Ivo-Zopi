@@ -52,9 +52,33 @@ public abstract class UtenteAutenticato {
         this.password = password;
     }
     
-    public void consultaElencoHackathon(){}
+    public void consultaElencoHackathon(){
+        for(Hackathon hackathon : hackathon) {
+            System.out.println(hackathon);
+        }
+    }
 
-    public void visualizzaRegolamento(){}
+    public void visualizzaRegolamento(Hackathon hackathon, Long id){
+        if(hackathon == null){
+            System.out.println("Hackathon non trovata");
+        }
+        else{
+                System.out.println("Regolamento hackathon: " + hackathon.getRegolamento());
+        }
+    }
 
-    public void gestisciProfilo(){}
+    public void gestisciProfilo(String nome, String cognome, String email, String password){
+        System.out.println("Utente: " + getId());
+        System.out.println("Nome: " + getNome() + "\n cognome: " + getCognome());
+        System.out.println("Email: " + getEmail());
+        System.out.println("Inserire Nuovo nome:");
+        setNome(nome);
+        System.out.println("Inserire Nuovo cognome:");
+        setCognome(cognome);
+        System.out.println("Inserire Nuova email:");
+        if(!(email.equals(this.email))) setEmail(email);
+        else System.out.println("Email precedente identica alla nuova inserita");
+        System.out.println("Inserire Nuovo password:");
+        setPassword(password);
+    }
 }
