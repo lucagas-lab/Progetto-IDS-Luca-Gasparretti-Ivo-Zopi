@@ -13,7 +13,7 @@ public class Hackathon {
     private StatoHackathon stato;
 
     private List<Team> teamIscritti= new ArrayList<>();
-    private List<Hackathon> hackathon= new ArrayList<>();
+    private static List<Hackathon> elencoHackathon= new ArrayList<>();
 
     public Hackathon(){}
 
@@ -25,6 +25,15 @@ public class Hackathon {
         this.premio=premio;
         this.regolamento=regolamento;
         this.stato=stato;
+        elencoHackathon.add(this);
+    }
+
+    public static List<Hackathon> getElencoHackathon() {
+        return elencoHackathon;
+    }
+
+    public static void setElencoHackathon(List<Hackathon> elencoHackathon) {
+        Hackathon.elencoHackathon = elencoHackathon;
     }
 
     public Long getId(){
@@ -84,7 +93,4 @@ public class Hackathon {
         this.teamIscritti = teamIscritti;
     }
 
-    public List<Hackathon> getHackathon(){
-        return hackathon;
-    }
 }

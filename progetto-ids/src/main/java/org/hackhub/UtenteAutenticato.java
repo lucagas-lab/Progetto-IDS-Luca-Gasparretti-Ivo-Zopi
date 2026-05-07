@@ -1,4 +1,5 @@
 package org.hackhub;
+import java.util.List;
 
 public abstract class UtenteAutenticato {
     private Long id;
@@ -51,22 +52,26 @@ public abstract class UtenteAutenticato {
     public void setPassword(String password){
         this.password = password;
     }
-    
+
     public void consultaElencoHackathon(){
-        for(Hackathon hackathon : hackathon) {
-            System.out.println(hackathon);
+        List<Hackathon> listaHackathon = Hackathon.getElencoHackathon();
+        if(listaHackathon.isEmpty()){
+            System.out.println("Nessuna hackathon");
+        }
+        else {
+            System.out.println("Elenco di tutti gli Hackathon presenti: ");
+            for (Hackathon h : listaHackathon) {
+                System.out.println(h);
+            }
         }
     }
-
-
-    public void consultaElencoHackathon(){}
 
     public void visualizzaRegolamento(Hackathon hackathon, Long id){
         if(hackathon == null){
             System.out.println("Hackathon non trovata");
         }
         else{
-                System.out.println("Regolamento hackathon: " + hackathon.getRegolamento());
+            System.out.println("Regolamento hackathon: \n" + hackathon.getRegolamento().getDescrizione());
         }
     }
 
