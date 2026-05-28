@@ -11,7 +11,7 @@ public class Organizzatore extends UtenteAutenticato {
     }
 
     public Hackathon creaHackathon(String nomeHackathon, LocalDateTime inizio, LocalDateTime fine, Double premio, Regolamento regolamento){
-        Hackathon nuovoHackathon = new Hackathon(null, nomeHackathon, inizio, fine, premio, regolamento, StatoHackathon.IN_ISCRIZIONE);
+        Hackathon nuovoHackathon = new Hackathon(nomeHackathon, inizio, fine, premio, regolamento);
         System.out.println("Hackathon"+ nomeHackathon + "creato con successo");
         return nuovoHackathon;
     }

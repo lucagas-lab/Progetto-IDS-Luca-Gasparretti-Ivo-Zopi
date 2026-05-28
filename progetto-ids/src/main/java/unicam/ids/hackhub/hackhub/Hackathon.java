@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Hackathon {
     private Long id;
-    private String nome;
+    private String nomeHackathon;
     private LocalDateTime dataInizio;
     private LocalDateTime dataFine;
     private Double premio;
@@ -17,18 +17,17 @@ public class Hackathon {
 
     public Hackathon(){}
 
-    public Hackathon(Long id, String nome, LocalDateTime dataInizio, LocalDateTime dataFine, Double premio, Regolamento regolamento){
-        this.id=id;
-        this.nome= nome;
+    public static List<Hackathon> getElencoHackathon() {
+        return elencoHackathon;
+    }
+
+    public Hackathon(String nomeHackathon, LocalDateTime dataInizio, LocalDateTime dataFine, Double premio, Giudice giudice, Mentore mentore, Regolamento regolamento) {
+        this.nomeHackathon= nomeHackathon;
         this.dataInizio=dataInizio;
         this.dataFine=dataFine;
         this.premio=premio;
         this.regolamento=regolamento;
         elencoHackathon.add(this);
-    }
-
-    public static List<Hackathon> getElencoHackathon() {
-        return elencoHackathon;
     }
 
     public static void setElencoHackathon(List<Hackathon> elencoHackathon) {
@@ -42,11 +41,11 @@ public class Hackathon {
         this.id = id;
     }
 
-    public String getNome(){
-        return nome;
+    public String getNomeHackathon(){
+        return nomeHackathon;
     }
-    public void setNome(String nome){
-        this.nome = nome;
+    public void setNomeHackathon(String nome){
+        this.nomeHackathon = nome;
     }
 
     public LocalDateTime getDataInizio(){
