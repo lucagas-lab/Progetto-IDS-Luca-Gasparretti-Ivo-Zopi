@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 public class GestoreHackathon {
 
     public GestoreHackathon(){}
+
     public Hackathon creaHackathon(String nomeHackathon, LocalDateTime dataInizio, LocalDateTime dataFine, Double premio, Giudice giudice, Mentore mentore, Regolamento regolamento){
         Hackathon nuovoHackathon = new Hackathon(nomeHackathon, dataInizio, dataFine, premio, giudice, mentore, regolamento);
         System.out.println("Hackathon"+ nomeHackathon + "creato con successo");
