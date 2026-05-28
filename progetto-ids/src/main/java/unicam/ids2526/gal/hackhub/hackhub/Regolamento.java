@@ -1,4 +1,4 @@
-package org.hackhub;
+package unicam.ids2526.gal.hackhub.hackhub;
 
 public class Regolamento {
     private String descrizione;

@@ -1,8 +1,6 @@
-package org.hackhub;
-import java.util.List;
-import java.util.ArrayList;
+package unicam.ids2526.gal.hackhub.hackhub;
 
-public class Utente extends UtenteAutenticato{
+public class Utente extends UtenteAutenticato {
     public Utente(){}
 
     public Utente(Long id, String nome, String cognome, String email, String password){

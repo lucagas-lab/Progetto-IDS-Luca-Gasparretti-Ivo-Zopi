@@ -1,8 +1,8 @@
-package org.hackhub;
+package unicam.ids2526.gal.hackhub.hackhub;
 import java.time.LocalDateTime;
 
 
-public class Organizzatore extends UtenteAutenticato{
+public class Organizzatore extends UtenteAutenticato {
 
     public Organizzatore(){}
 

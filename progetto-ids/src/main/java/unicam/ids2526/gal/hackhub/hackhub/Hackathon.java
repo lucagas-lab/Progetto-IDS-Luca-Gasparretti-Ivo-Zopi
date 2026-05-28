@@ -1,4 +1,4 @@
-package org.hackhub;
+package unicam.ids2526.gal.hackhub.hackhub;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
@@ -10,21 +10,20 @@ public class Hackathon {
     private LocalDateTime dataFine;
     private Double premio;
     private Regolamento regolamento;
-    private StatoHackathon stato;
+    private StatoHackathon stato = new StatoInIscrizione();
 
     private List<Team> teamIscritti= new ArrayList<>();
     private static List<Hackathon> elencoHackathon= new ArrayList<>();
 
     public Hackathon(){}
 
-    public Hackathon(Long id, String nome, LocalDateTime dataInizio, LocalDateTime dataFine, Double premio, Regolamento regolamento, StatoHackathon stato){
+    public Hackathon(Long id, String nome, LocalDateTime dataInizio, LocalDateTime dataFine, Double premio, Regolamento regolamento){
         this.id=id;
         this.nome= nome;
         this.dataInizio=dataInizio;
         this.dataFine=dataFine;
         this.premio=premio;
         this.regolamento=regolamento;
-        this.stato=stato;
         elencoHackathon.add(this);
     }
 
