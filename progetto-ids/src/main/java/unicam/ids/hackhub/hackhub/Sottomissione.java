@@ -1,4 +1,4 @@
-package unicam.ids2526.gal.hackhub.hackhub;
+package unicam.ids.hackhub.hackhub;
 
 public class Sottomissione {
     private Long id;

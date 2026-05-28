@@ -1,4 +1,4 @@
-package unicam.ids2526.gal.hackhub.hackhub;
+package unicam.ids.hackhub.hackhub;
 import java.util.List;
 import java.util.ArrayList;
 
