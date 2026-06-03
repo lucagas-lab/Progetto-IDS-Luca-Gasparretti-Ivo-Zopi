@@ -1,10 +1,10 @@
-package unicam.ids.hackhub.hackhub;
+package unicam.ids.hackhub.core.hackathon;
 
 
 public class StatoInValutazione implements StatoHackathon {
 
     @Override
-    public void avanzaStato(Hackathon hackathon) {
+    public void cambiaStato(Hackathon hackathon) {
         hackathon.setStato(new StatoConcluso());
         System.out.println("L'hackathon è concluso");
     }
