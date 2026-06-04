@@ -5,7 +5,7 @@ package unicam.ids.hackhub.core.utenti;
 public class Utente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idUtente;
     @Column(unique = true, nullable = false)
     private String username;
     @Column(unique = true, nullable = false)
@@ -19,15 +19,15 @@ public class Utente {
     public Utente(){}
 
     public Utente(String username, String email, String password, Ruolo ruolo){
-        this.username= username;
-        this.email= email;
-        this.password= password;
-        this.ruolo= ruolo;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.ruolo = ruolo;
     }
 
-    public Long getId(){ return id; }
+    public Long getIdUtente(){ return idUtente; }
 
-    public void setId(Long id){ this.id = id; }
+    public void setIdUtente(Long idUtente){ this.idUtente = idUtente; }
 
     public String getUsername(){ return username; }
 
@@ -38,6 +38,7 @@ public class Utente {
     public void setEmail(String email){ this.email= email; }
 
     public String getPassword(){ return password; }
+
     public void setPassword(String password){ this.password = password; }
 
     public Ruolo getRuolo(){ return ruolo; }

@@ -10,5 +10,5 @@ public interface RichiestaRepository {
 
     List<Richiesta> findByRicevente(Utente ricevente);
 
-    boolean existsByMittenteAndRiceventeAndEsitoInvitoNot(Utente mittente, Utente ricevente, EsitoRichiesta esitoRichiesta);
+    boolean existsByMittenteAndRiceventeAndEsitoRichiestaNot(Utente mittente, Utente ricevente, EsitoRichiesta esitoRichiesta);
 }

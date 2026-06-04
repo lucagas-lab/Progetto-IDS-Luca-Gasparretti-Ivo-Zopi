@@ -20,23 +20,15 @@ public class ConcreteUtenteBuilder implements UtenteBuilder{
 
     @Override
     public void setRuolo(String ruolo) {
-        ruolo= ruolo.toUpperCase();
-        switch (ruolo){
-            case "UTENTE":
-                utente.setRuolo(Ruolo.UTENTE);
-                break;
-            case "MENTORE":
-                utente.setRuolo(Ruolo.MENTORE);
-                break;
-            case "ORGANIZZATORE":
-                utente.setRuolo(Ruolo.ORGANIZZATORE);
-                break;
-            case "GIUDICE":
+        try {
+            utente.setRuolo(Ruolo.valueOf(ruolo.toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Ruolo non valido: " + ruolo);
         }
     }
 
     @Override
-    public Utente getutente() {
+    public Utente getUtente() {
         return utente;
     }
 
