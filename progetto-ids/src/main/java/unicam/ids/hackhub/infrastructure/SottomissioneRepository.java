@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface SottomissioneRepository {
     Optional<Sottomissione> findByNomeTeam(Team nomeTeam);
-    Optional<Sottomissione> findByNomeTeamID(Long teamid);
+    Optional<Sottomissione> findByTeamID(Long teamId);
 
     boolean existsByTeam(Team t);
 

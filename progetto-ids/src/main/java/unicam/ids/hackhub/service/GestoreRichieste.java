@@ -1,4 +1,4 @@
 package unicam.ids.hackhub.service;
 
-public class GestoreInviti {
+public class GestoreRichieste {
 }

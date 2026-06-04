@@ -1,7 +1,7 @@
 package unicam.ids.hackhub.service;
 
 import unicam.ids.hackhub.core.utenti.UtenteBuilder;
-import unicam.ids.hackhub.core.utenti.DefaultUtenteBuilder;
+import unicam.ids.hackhub.core.utenti.ConcreteUtenteBuilder;
 import unicam.ids.hackhub.core.utenti.Utente;
 import unicam.ids.hackhub.infrastructure.UtenteRepository;
 
@@ -14,7 +14,7 @@ public class GestoreUtente {
     public GestoreUtente(UtenteRepository utenteRep, PasswordEncoder passwordEncoder) {
         this.utenteRep = utenteRep;
         this.passwordEncoder = passwordEncoder;
-        this.utenteBuilder = new DefaultUtenteBuilder();
+        this.utenteBuilder = new ConcreteUtenteBuilder();
     }
 
 

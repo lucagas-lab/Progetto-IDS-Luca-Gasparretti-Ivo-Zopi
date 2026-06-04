@@ -1,9 +1,9 @@
 package unicam.ids.hackhub.core.utenti;
 
-public class DefaultUtenteBuilder implements Utentebuilder{
+public class ConcreteUtenteBuilder implements UtenteBuilder{
     private Utente utente;
 
-    public DefaultUtenteBuilder(){
+    public ConcreteUtenteBuilder(){
         this.utente= new Utente();
     }
 
