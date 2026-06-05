@@ -9,14 +9,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import unicam.ids.hackhub.core.utenti.Utente;
 import unicam.ids.hackhub.service.GestoreUtente;
-import unicam.ids.hackhub.dto.RegistraUtenteDTO;
-import unicam.ids2526.gal.progetto_hackhub_gal.security.JwtUtil;
-import unicam.ids2526.gal.progetto_hackhub_gal.security.LoginRequest;
+import unicam.ids.hackhub.service.GestoreLogin;
+import unicam.ids.hackhub.security.LoginRequest;
+import unicam.ids.hackhub.dto.RegistrazioneUtenteDTO;
+import unicam.ids.hackhub.dto.AggiornaProfiloDTO;
+
 
 @RestController
 @RequestMapping("/utenti")
 public class UtenteBoundary {
     private final GestoreUtente gestoreUtente;
+    private final GestoreLogin gestoreLogin;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
@@ -45,6 +48,34 @@ public class UtenteBoundary {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore di sistema");
+        }
+    }
+
+    @Postmapping("/registra")
+    public ResponseEntity<String> effettuaRegistrazione(@RequestBody RegistrazioneUtenteDTO dto){
+        try{
+            gestoreUtente.effettuaRegistrazione(
+                    dto.getUsername(),
+                    dto.getEmail(),
+                    dto.getPassword(),
+                    dto.getRuolo()
+            );
+            return new ResponseEntity<>("Registrazione effettuata con successo", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Postmapping("/login")
+    public ResponseEntity<String> effettuaLogin(@RequestBody LoginRequest request){
+        try{
+            // Passiamo i dati estratti dal DTO al nostro Service dedicato
+            String fintoToken = gestoreLogin.effettuaLogin(request.getUsername(), request.getPassword());
+            return new ResponseEntity<>(fintoToken, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Errore interno di sistema durante l'accesso", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

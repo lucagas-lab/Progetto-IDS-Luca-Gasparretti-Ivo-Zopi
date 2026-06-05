@@ -44,4 +44,35 @@ public class GestoreUtente {
         utenteRep.save(utenteLoggato);
     }
 
+    public void effettuaRegistrazione(String email, String username, String password, String ruolo) throws Exception{
+        if(email == null || !email.contains("@")){
+            throw new Exception("Email non valida");
+        }
+        if(username == null || utenteRep.findByUsername(username).isPresent()){
+            throw new Exception("Username non valido o già occupato");
+        }
+        if(password == null || password.isBlank()){
+            throw new Exception("Password non valida");
+        }
+
+        ruolo = ruolo.toUpperCase();
+        switch(ruolo){
+            case "UTENTE", "GIUDICE", "MENTORE", "ORGANIZZATORE" -> {}
+            default -> throw new Exception("Ruolo non valido");
+        }
+
+        String passwordCriptata = passwordEncoder.encode(password);
+
+        utenteBuilder.resetUtente();
+        utenteBuilder.setEmail(email);
+        utenteBuilder.setUsername(username);
+        utenteBuilder.setPassword(passwordCriptata);
+        utenteBuilder.setRuolo(ruolo);
+
+        Utente utente= utenteBuilder.getUtenteFinale();
+
+        utenteRep.save(utente);
+
+    }
+
 }
