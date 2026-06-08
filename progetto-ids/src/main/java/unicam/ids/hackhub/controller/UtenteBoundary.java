@@ -2,10 +2,7 @@ package unicam.ids.hackhub.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import unicam.ids.hackhub.core.utenti.Utente;
 import unicam.ids.hackhub.service.GestoreUtente;
@@ -18,15 +15,13 @@ import unicam.ids.hackhub.dto.AggiornaProfiloDTO;
 @RestController
 @RequestMapping("/utenti")
 public class UtenteBoundary {
+
     private final GestoreUtente gestoreUtente;
     private final GestoreLogin gestoreLogin;
-    private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtUtil;
 
-    public UtenteBoundary(GestoreUtente gestoreUtente, AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+    public UtenteBoundary(GestoreUtente gestoreUtente, GestoreLogin gestoreLogin) {
         this.gestoreUtente = gestoreUtente;
-        this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
+        this.gestoreLogin = gestoreLogin;
     }
 
     @PutMapping("/profilo")
@@ -51,14 +46,11 @@ public class UtenteBoundary {
         }
     }
 
-    @Postmapping("/registra")
+    @PostMapping("/registra") // M maiuscola!
     public ResponseEntity<String> effettuaRegistrazione(@RequestBody RegistrazioneUtenteDTO dto){
         try{
             gestoreUtente.effettuaRegistrazione(
-                    dto.getUsername(),
-                    dto.getEmail(),
-                    dto.getPassword(),
-                    dto.getRuolo()
+                    dto.getUsername(), dto.getEmail(), dto.getPassword(), dto.getRuolo()
             );
             return new ResponseEntity<>("Registrazione effettuata con successo", HttpStatus.OK);
         } catch (Exception e) {
@@ -66,16 +58,16 @@ public class UtenteBoundary {
         }
     }
 
-    @Postmapping("/login")
+    @PostMapping("/login") // M maiuscola!
     public ResponseEntity<String> effettuaLogin(@RequestBody LoginRequest request){
         try{
-            // Passiamo i dati estratti dal DTO al nostro Service dedicato
-            String fintoToken = gestoreLogin.effettuaLogin(request.getUsername(), request.getPassword());
-            return new ResponseEntity<>(fintoToken, HttpStatus.OK);
+            // Il gestore ci restituisce il VERO token JWT
+            String token = gestoreLogin.effettuaLogin(request.getUsername(), request.getPassword());
+            return new ResponseEntity<>(token, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<>("Errore interno di sistema durante l'accesso", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Credenziali errate", HttpStatus.UNAUTHORIZED);
         }
     }
 }

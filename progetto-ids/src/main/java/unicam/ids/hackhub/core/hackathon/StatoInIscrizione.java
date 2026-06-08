@@ -9,4 +9,14 @@ public class StatoInIscrizione implements StatoHackathon {
     }
 
     public String getNomeStato(){ return "In iscrizione";}
+
+    @Override
+    public void verificaPossibilitaSottomissione() throws Exception {
+        throw new Exception("Errore: L'hackathon è in fase di iscrizione, non è ancora possibile inviare progetti.");
+    }
+
+    @Override
+    public void verificaPossibilitaValutazione() throws Exception {
+        throw new Exception("Errore: Impossibile valutare. L'hackathon è ancora in fase di iscrizione, i team non hanno ancora iniziato a lavorare.");
+    }
 }

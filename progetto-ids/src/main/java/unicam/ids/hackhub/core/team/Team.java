@@ -38,11 +38,11 @@ public class Team {
         return teamId;
     }
 
-    public String getNome() {
+    public String getNomeTeam() {
         return nomeTeam;
     }
 
-    public void setNome(String nome) { this.nomeTeam = nomeTeam; }
+    public void setNomeTeam(String nome) { this.nomeTeam = nomeTeam; }
 
     public Hackathon getHackathon() {
         return hackathon;

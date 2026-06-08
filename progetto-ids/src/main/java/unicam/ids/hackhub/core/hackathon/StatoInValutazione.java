@@ -10,4 +10,12 @@ public class StatoInValutazione implements StatoHackathon {
     }
 
     public String getNomeStato(){ return "In valutazione";}
+
+    @Override
+    public void verificaPossibilitaSottomissione() throws Exception {
+        throw new Exception("Errore: Il tempo è scaduto. L'hackathon è già in fase di valutazione.");
+    }
+
+    @Override
+    public void verificaPossibilitaValutazione() throws Exception {} //Il metodo è volutamente vuoto in quanto in questo statp la valutazione è permessa
 }

@@ -77,13 +77,13 @@ public class Hackathon {
     public String getNomeHackathon() {
         return nomeHackathon;
     }
+
     public void setNomeHackathon(String nome) {
-        this.nomeHackathon = nomeHackathon;
+        this.nomeHackathon = nome;
     }
 
-    public String getStato() {
-        return stato.getNomeStato();
-    }
+    public StatoHackathon getStato() { return this.stato; }
+
     void setStato(StatoHackathon stato) {this.stato = stato;}
 
     public void cambiaStato() {this.stato.cambiaStato(this);}
@@ -91,6 +91,7 @@ public class Hackathon {
     public LocalDateTime getDataInizioStato() {
         return dataInizioStato;
     }
+
     void setDataInizioStato(LocalDateTime dataInizioStato) { this.dataInizioStato= dataInizioStato; }
 
     public Double getPremio() {

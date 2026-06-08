@@ -9,4 +9,12 @@ public class StatoInCorso implements StatoHackathon {
     }
 
     public String getNomeStato(){ return "In corso";}
+
+    @Override
+    public void verificaPossibilitaSottomissione() throws Exception {}
+
+    @Override
+    public void verificaPossibilitaValutazione() throws Exception {
+        throw new Exception("Errore: Impossibile valutare. L'hackathon è attualmente in corso. Bisogna attendere la chiusura delle consegne.");
+    }
 }

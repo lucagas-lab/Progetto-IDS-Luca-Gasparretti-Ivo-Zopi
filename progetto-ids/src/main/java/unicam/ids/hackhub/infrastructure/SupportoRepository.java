@@ -1,8 +1,10 @@
 package unicam.ids.hackhub.infrastructure;
 
-import import unicam.ids.hackhub.core.supporto.Supporto;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List
+import  unicam.ids.hackhub.core.supporto.Supporto;
+
+import java.util.List;
 
 public interface SupportoRepository {
     List<Supporto> findByHackathonID(Long hackathonId);

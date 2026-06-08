@@ -8,5 +8,15 @@ public class StatoConcluso implements StatoHackathon {
     }
 
     public String getNomeStato(){ return "Concluso";}
+
+    @Override
+    public void verificaPossibilitaSottomissione() throws Exception {
+        throw new Exception("Errore: L'hackathon è definitivamente concluso.");
+    }
+
+    @Override
+    public void verificaPossibilitaValutazione() throws Exception {
+        throw new Exception("Errore: Impossibile valutare. L'hackathon è già concluso e le valutazioni sono definitive.");
+    }
 }
 
