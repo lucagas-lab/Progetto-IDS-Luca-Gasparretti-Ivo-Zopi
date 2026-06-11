@@ -81,4 +81,14 @@ public class HackathonBoundary {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("/{idHackathon}/iscrivi/{idTeam}")
+    public ResponseEntity<String> iscriviTeam(@PathVariable("idHackathon") Long idHackathon, @PathVariable("idTeam") Long idTeam) {
+        try {
+            gestoreHackathon.iscriviTeam(idHackathon, idTeam);
+            return new ResponseEntity<>("Team iscritto con successo all'Hackathon", HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

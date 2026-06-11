@@ -78,7 +78,19 @@ public class GestoreHackathon {
 
     }
 
-    public void iscriviTeam(Long idTeam, Long idHackathon){}
+    public void iscriviTeam(Long idTeam, Long idHackathon) throws Exception{
+        Hackathon hackathon = hackathonRep.findById(idHackathon)
+                .orElseThrow(() -> new Exception("Errore: L'Hackathon con l'ID richiesto non esiste: " + idHackathon));
+        Team team = teamRep.findById(idTeam)
+                .orElseThrow(() -> new Exception("Errore: Il team non esiste: " + idTeam));
+        if(team.getHackathon() == hackathon){
+            throw new Exception("Errore: Il team è già iscritto all'Hackathon");
+            }
+        hackathon.addTeam(team);
+        team.setHackathon(hackathon);
+        teamRep.save(team);
+        hackathonRep.save(hackathon);
+    }
 
     public String visualizzaRegolamento(Long idHackathon) throws Exception {
         Hackathon regolamento = hackathonRep.findById(idHackathon)
