@@ -2,12 +2,13 @@ package unicam.ids.hackhub.core.hackathon;
 
 import unicam.ids.hackhub.core.utenti.Utente;
 import unicam.ids.hackhub.core.team.Team;
+import unicam.ids.hackhub.core.hackathon.StatoHackathon;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Hackathon {
+public class Hackathon{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idHackathon;
@@ -66,7 +67,7 @@ public class Hackathon {
         this.giudice = giudice;
         this.mentori = mentore;
         this.teamPartecipanti = new ArrayList<Team>();
-        this.stato = new InIscrizione();
+        this.stato = new StatoInIscrizione();
         this.dataInizioStato = LocalDateTime.now();
     }
 

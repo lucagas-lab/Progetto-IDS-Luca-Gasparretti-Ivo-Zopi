@@ -80,18 +80,31 @@ public class GestoreHackathon {
 
     public void iscriviTeam(Long idTeam, Long idHackathon){}
 
-    public void visualizzaRegolamento(){}
+    public String visualizzaRegolamento(Long idHackathon) throws Exception {
+        Hackathon regolamento = hackathonRep.findById(idHackathon)
+                .orElseThrow(()-> new Exception("Errore: L'Hackathon con l'ID richiesto non esiste: " + idHackathon));
+        return regolamento.getRegolamento();
+    }
 
-    public void consultaElencoHackathon(){
-        List<Hackathon> hackathon = hackathonRep.findAll();
+    public List<HackathonDTO> consultaElencoHackathon(){
+
+        List<Hackathon> listaHackathon = hackathonRep.findAll();
+        return listaHackathon.stream()
+                .map(this::convertiDTO)
+                .collect(Collectors.toList());
     }
 
     public HackathonDTO selezionaHackathon(Long idHackathon) throws Exception{
         Hackathon hackathon = hackathonRep.findById(idHackathon)
                 .orElseThrow(()-> new Exception("Errore: Nessun Hackathon trovato con ID: " + idHackathon));
 
-        // 2. Prepariamo i dati complessi prima di inserirli nel costruttore
 
+        return convertiDTO(hackathon);
+    }
+
+    private HackathonDTO convertiDTO(Hackathon hackathon){
+
+        // 2. Prepariamo i dati complessi prima di inserirli nel costruttore
         // Gestione sicura della data (se presente)
         String dataInizioStr = (hackathon.getDataInizio() != null)
                 ? hackathon.getDataInizio().toString()

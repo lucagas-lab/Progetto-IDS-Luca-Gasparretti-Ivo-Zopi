@@ -58,4 +58,27 @@ public class HackathonBoundary {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/elencoHackathon")
+    public ResponseEntity<Object> elencoHackathon() {
+        try {
+            List<HackathonDTO> elenco = gestoreHackathon.consultaElencoHackathon();
+            if (elenco.isEmpty()) {
+                return new ResponseEntity<>("Nessun Hackathon nel sistema", HttpStatus.OK);
+            }
+            return new ResponseEntity<>(elenco, HttpStatus.OK);
+        }catch(Exception e){
+                return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/visualizzaRegolamento/{id}")
+    public ResponseEntity<Object> visualizzaRegolamento(@PathVariable("id") Long idHackathon) {
+        try {
+            String regolamento = gestoreHackathon.visualizzaRegolamento(idHackathon);
+            return new ResponseEntity<>(regolamento, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
