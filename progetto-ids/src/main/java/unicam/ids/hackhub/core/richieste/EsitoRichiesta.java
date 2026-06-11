@@ -1,4 +1,7 @@
 package unicam.ids.hackhub.core.richieste;
 
-public class EsitoRichiesta {
+public enum EsitoRichiesta {
+    PENDENTE,
+    ACCETTATA,
+    RIFIUTATA
 }

@@ -5,6 +5,7 @@ import unicam.ids.hackhub.core.segnalazioni.Segnalazione;
 import unicam.ids.hackhub.core.team.Team;
 import unicam.ids.hackhub.core.utenti.Utente;
 
+import java.util.List;
 
 public interface SegnalazioneRepository {
     List<Segnalazione> findByHackathon(Hackathon hackathon);

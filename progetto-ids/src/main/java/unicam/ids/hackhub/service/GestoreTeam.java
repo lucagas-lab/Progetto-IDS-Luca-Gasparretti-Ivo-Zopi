@@ -19,7 +19,7 @@ public class GestoreTeam {
     private final SottomissioneRepository sottomissioneRep;
 
     public GestoreTeam(TeamRepository teamRepository, UtenteRepository utenteRep, SegnalazioneRepository segnalazioneRep,
-                            HackathonRepository hackathonRep, SottomissioneRepository sottomissioneRep){
+                            HackathonRepository hackathonRep, SottomissioneRepository sottomissioneRep) {
         this.teamRep = teamRepository;
         this.utenteRep = utenteRep;
         this.segnalazioneRep = segnalazioneRep;
