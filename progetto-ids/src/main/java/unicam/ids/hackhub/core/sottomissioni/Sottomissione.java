@@ -2,6 +2,7 @@ package unicam.ids.hackhub.core.sottomissioni;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
 import unicam.ids.hackhub.core.team.Team;
 
 @Entity

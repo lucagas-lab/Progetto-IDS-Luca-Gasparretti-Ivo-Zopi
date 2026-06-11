@@ -2,6 +2,7 @@ package unicam.ids.hackhub.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import unicam.ids.hackhub.core.hackathon.Hackathon;
 import unicam.ids.hackhub.core.sottomissioni.Sottomissione;
 import unicam.ids.hackhub.core.sottomissioni.Valutazione;
@@ -73,25 +74,7 @@ public class GestoreSottomissione {
         // 1. Recupera la sottomissione dal database usando l'ID fornito gratis da JpaRepository
         Sottomissione sottomissione= sottomissioneRep.findById(idSottomissione)
                 .orElseThrow(() -> new Exception("Errore: Nessuna sottomissione trovata con ID: " + idSottomissione));
-
-        // 2. Estrae il voto in totale sicurezza per evitare fastidiosi NullPointerException
-        // Se il progetto è stato consegnato ma non ancora valutato, il voto rimarrà null
-        Double votoAssegnato = null;
-        if(sottomissione.getValutazione() != null){
-            votoAssegnato = sottomissione.getValutazione().getVoto();
-        }
-
-        // 3. Costruisce il DTO di risposta popolando tutti i campi richiesti per la visualizzazione
-        SottomissioneDTO rispostaDTO = new SottomissioneDTO(
-                sottomissione.getIdSottomissione(),
-                sottomissione.getTeam().getNomeTeam(),
-                sottomissione.getNome(),
-                sottomissione.getDescrizione(),
-                sottomissione.getLinkRepository(),
-                votoAssegnato
-        );
-
-        return rispostaDTO;
+       return convertiDTO(sottomissione);
     }
 
     public void valutaSottomissione(ValutaSottomissioneDTO valutaDTO) throws Exception{
@@ -117,6 +100,24 @@ public class GestoreSottomissione {
         // 6. Collego la valutaziona alla sottomissione e aggiorni il database
         sottomissione.setValutazione(nuovaValutazione);
         sottomissioneRep.save(sottomissione);
+    }
+
+    private SottomissioneDTO convertiDTO(Sottomissione sottomissione) {
+        // Estrae il voto in totale sicurezza
+        Double votoAssegnato = null;
+        if (sottomissione.getValutazione() != null) {
+            votoAssegnato = sottomissione.getValutazione().getVoto();
+        }
+
+        // Costruisce e ritorna il DTO
+        return new SottomissioneDTO(
+                sottomissione.getIdSottomissione(),
+                sottomissione.getTeam().getNomeTeam(),
+                sottomissione.getNome(),
+                sottomissione.getDescrizione(),
+                sottomissione.getLinkRepository(),
+                votoAssegnato
+        );
     }
 }
 

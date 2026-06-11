@@ -1,11 +1,18 @@
 package unicam.ids.hackhub.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
+
 import unicam.ids.hackhub.core.utenti.UtenteBuilder;
 import unicam.ids.hackhub.core.utenti.ConcreteUtenteBuilder;
 import unicam.ids.hackhub.core.utenti.Utente;
 import unicam.ids.hackhub.infrastructure.UtenteRepository;
 
+import java.util.Optional;
 
+@Service
+@Transactional
 public class GestoreUtente {
     private final UtenteRepository utenteRep;
     private final UtenteBuilder utenteBuilder;
@@ -69,7 +76,7 @@ public class GestoreUtente {
         utenteBuilder.setPassword(passwordCriptata);
         utenteBuilder.setRuolo(ruolo);
 
-        Utente utente= utenteBuilder.getUtenteFinale();
+        Utente utente= utenteBuilder.getUtente();
 
         utenteRep.save(utente);
 

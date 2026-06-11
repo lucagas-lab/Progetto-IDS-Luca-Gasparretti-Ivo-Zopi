@@ -6,6 +6,10 @@ import unicam.ids.hackhub.dto.TeamDTO;
 import unicam.ids.hackhub.core.utenti.Utente;
 import unicam.ids.hackhub.infrastructure.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class GestoreTeam {
     private final TeamRepository teamRep;
@@ -35,5 +39,42 @@ public class GestoreTeam {
         Utente utente= utenteRep.findByUsername(username).orElseThrow();
         Team team= new Team(nomeTeam, utente);
         teamRep.save(team);
+    }
+
+    public TeamDTO selezionaTeam(Long idTeam) throws Exception {
+        Team selezioneTeam = teamRep.findById(idTeam)
+                .orElseThrow(() -> new Exception("Errore: Il team selezionato non esiste: " + idTeam));
+
+        return convertiDTO(selezioneTeam);
+    }
+
+    private TeamDTO convertiDTO(Team team) {
+        // 1. Estrae il nome dell'hackathon (se iscritto)
+        String nomeHackathon = (team.getHackathon() != null)
+                ? team.getHackathon().getNomeHackathon()
+                : "Nessun Hackathon";
+
+        // 2. Estrae le liste di nomi ed email in modo sicuro
+        List<String> nomiMembri = new ArrayList<>();
+        List<String> emailMembri = new ArrayList<>();
+
+        if (team.getUtenti() != null) {
+            nomiMembri = team.getUtenti().stream()
+                    .map(Utente::getUsername)
+                    .collect(Collectors.toList());
+
+            emailMembri = team.getUtenti().stream()
+                    .map(Utente::getEmail)
+                    .collect(Collectors.toList());
+        }
+
+        // 3. Ritorna il DTO usando il costruttore che hai appena creato
+        return new TeamDTO(
+                team.getTeamId(),
+                team.getNomeTeam(),
+                nomeHackathon,
+                nomiMembri,
+                emailMembri
+        );
     }
 }

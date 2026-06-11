@@ -2,6 +2,7 @@ package unicam.ids.hackhub.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import unicam.ids.hackhub.core.hackathon.Hackathon;
 import unicam.ids.hackhub.core.team.Team;
 import unicam.ids.hackhub.dto.HackathonDTO;

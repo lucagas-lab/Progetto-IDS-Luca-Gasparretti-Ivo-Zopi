@@ -5,6 +5,6 @@ public interface UtenteBuilder {
     public void setUsername(String username);
     public void setPassword(String password);
     public void setRuolo(String ruolo);
-    public Utente getUtenteFinale();
+    public Utente getUtente();
     public void resetUtente();
 }

@@ -69,5 +69,4 @@ public class Team {
     public void setSottomissione(Sottomissione sottomissione) {
         this.sottomissione = sottomissione;
     }
-
 }
