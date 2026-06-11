@@ -12,6 +12,10 @@ import unicam.ids.hackhub.dto.CreaHackathonDTO;
 import unicam.ids.hackhub.dto.HackathonDTO;
 import unicam.ids.hackhub.service.GestoreHackathon;
 
+import java.util.List;
+
+@RestController
+@RequestMapping("/hackathon")
 public class HackathonBoundary {
     private final GestoreHackathon gestoreHackathon;
 
@@ -33,7 +37,7 @@ public class HackathonBoundary {
         List<String> usersMentori = creaDTO.getMentori();
 
         try {
-            hackathonHandler.creaHackathon(nomeHackhathon, premio, dimensioneTeam, regolamento,
+            gestoreHackathon.creaHackathon(nomeHackhathon, premio, dimensioneTeam, regolamento,
                     userOrg, userGiudice, usersMentori);
 
             return new ResponseEntity<>("Hackathon creato con successo", HttpStatus.OK);
@@ -42,6 +46,16 @@ public class HackathonBoundary {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>("Errore interno di sistema durante la creazione", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/seleziona/{id}")
+    public ResponseEntity<Object> selezionaHackathon(@PathVariable("id") Long idHackathon) {
+        try {
+            HackathonDTO hackathonDTO = gestoreHackathon.selezionaHackathon(idHackathon);
+            return new ResponseEntity<>(hackathonDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

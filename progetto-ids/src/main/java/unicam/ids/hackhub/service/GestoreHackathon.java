@@ -2,17 +2,18 @@ package unicam.ids.hackhub.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import unicam.ids.hackhub.core.hackathon.Hackathon;
-import unicam.ids.hackhub.dto.HackathonDTO;
 import unicam.ids.hackhub.core.team.Team;
+import unicam.ids.hackhub.dto.HackathonDTO;
 import unicam.ids.hackhub.core.utenti.Ruolo;
 import unicam.ids.hackhub.core.utenti.Utente;
 import unicam.ids.hackhub.infrastructure.HackathonRepository;
 import unicam.ids.hackhub.infrastructure.TeamRepository;
 import unicam.ids.hackhub.infrastructure.UtenteRepository;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -81,5 +82,60 @@ public class GestoreHackathon {
 
     public void visualizzaRegolamento(){}
 
-    public void consultaElencoHackathon(){}
+    public void consultaElencoHackathon(){
+        List<Hackathon> hackathon = hackathonRep.findAll();
+    }
+
+    public HackathonDTO selezionaHackathon(Long idHackathon) throws Exception{
+        Hackathon hackathon = hackathonRep.findById(idHackathon)
+                .orElseThrow(()-> new Exception("Errore: Nessun Hackathon trovato con ID: " + idHackathon));
+
+        // 2. Prepariamo i dati complessi prima di inserirli nel costruttore
+
+        // Gestione sicura della data (se presente)
+        String dataInizioStr = (hackathon.getDataInizio() != null)
+                ? hackathon.getDataInizio().toString()
+                : "Data non definita";
+
+        // Gestione dello stato (assumendo che getStato() restituisca un enum o un oggetto)
+        String statoStr = (hackathon.getStato() != null)
+                ? hackathon.getStato().toString()
+                : "Sconosciuto";
+
+        // Conversione: Da List<Team> a List<String> (solo i nomi)
+        List<String> nomiTeam = new ArrayList<>();
+        if (hackathon.getTeamPartecipanti() != null) {
+            nomiTeam = hackathon.getTeamPartecipanti().stream()
+                    .map(Team::getNomeTeam) // Usa il getter corretto della tua entità Team
+                    .collect(Collectors.toList());
+        }
+
+        // Conversione: Da List<Utente> a List<String> (nomi ed email dei mentori)
+        List<String> nomiMentori = new ArrayList<>();
+        List<String> emailMentori = new ArrayList<>();
+        if (hackathon.getMentori() != null) {
+            nomiMentori = hackathon.getMentori().stream()
+                    .map(Utente::getUsername)
+                    .collect(Collectors.toList());
+
+            emailMentori = hackathon.getMentori().stream()
+                    .map(Utente::getEmail)
+                    .collect(Collectors.toList());
+        }
+
+        // 3. Costruiamo e restituiamo il DTO finale!
+        return new HackathonDTO(
+                hackathon.getNomeHackathon(), // o getNome() in base a come l'hai chiamato nell'entità
+                hackathon.getPremio(),
+                hackathon.getDimenisoneTeam(),
+                dataInizioStr,
+                statoStr,
+                nomiTeam,
+                hackathon.getOrganizzatore().getUsername(),
+                hackathon.getOrganizzatore().getEmail(),
+                hackathon.getGiudice().getEmail(),
+                nomiMentori,
+                emailMentori
+        );
+    }
 }

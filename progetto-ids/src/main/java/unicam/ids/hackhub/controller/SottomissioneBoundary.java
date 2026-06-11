@@ -15,6 +15,8 @@ import unicam.ids.hackhub.service.GestoreSottomissione;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/sottomissioni")
 public class SottomissioneBoundary {
     private final GestoreSottomissione gestoreSottomissione;
 

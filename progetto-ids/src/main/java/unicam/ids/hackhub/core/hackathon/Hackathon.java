@@ -88,11 +88,11 @@ public class Hackathon {
 
     public void cambiaStato() {this.stato.cambiaStato(this);}
 
-    public LocalDateTime getDataInizioStato() {
+    public LocalDateTime getDataInizio() {
         return dataInizioStato;
     }
 
-    void setDataInizioStato(LocalDateTime dataInizioStato) { this.dataInizioStato= dataInizioStato; }
+    void setDataInizio(LocalDateTime dataInizioStato) { this.dataInizioStato= dataInizioStato; }
 
     public Double getPremio() {
         return premio;
