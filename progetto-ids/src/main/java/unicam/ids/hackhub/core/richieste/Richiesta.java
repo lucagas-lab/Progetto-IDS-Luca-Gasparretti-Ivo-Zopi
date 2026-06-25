@@ -36,7 +36,7 @@ public class Richiesta {
     public Richiesta(Utente utente, Team team) {
         this.utente = utente;
         this.team = team;
-        this.stato = EsitoRichiesta.PENDENTE; // Quando nasce, la richiesta è sempre pendente
+        this.statoRichiesta = EsitoRichiesta.PENDENTE; // Quando nasce, la richiesta è sempre pendente
         this.dataRichiesta = LocalDateTime.now();
     }
 
@@ -53,11 +53,11 @@ public class Richiesta {
     }
 
     public EsitoRichiesta getStato() {
-        return stato;
+        return statoRichiesta;
     }
 
     public void setStato(EsitoRichiesta stato) {
-        this.stato = stato;
+        this.statoRichiesta = stato;
     }
 
     public LocalDateTime getDataRichiesta() {
