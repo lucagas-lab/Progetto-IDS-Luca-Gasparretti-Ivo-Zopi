@@ -1,6 +1,6 @@
 package unicam.ids.hackhub.core.richieste;
 
-//import jakarta.persistence.*;
+import jakarta.persistence.*;
 
 import unicam.ids.hackhub.core.team.Team;
 import unicam.ids.hackhub.core.utenti.Utente;

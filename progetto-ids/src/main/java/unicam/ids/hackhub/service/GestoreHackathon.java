@@ -33,7 +33,7 @@ public class GestoreHackathon {
     public void creaHackathon(String nomeHackathon, Double premio, Integer dimensioneTeam, String regolamento, String userOrganizzatore,
                               String userGiudice, List<String> userMentori) throws Exception{
 
-        if(hackathonRep.findByNome(nomeHackathon).isPresent() || nomeHackathon.isEmpty()){
+        if(hackathonRep.findByNomeHackathon(nomeHackathon).isPresent() || nomeHackathon.isEmpty()){
             throw new Exception("Nome per l'hackathon non valido");
         }
 
@@ -114,6 +114,18 @@ public class GestoreHackathon {
 
         return convertiDTO(hackathon);
     }
+
+    public List<HackathonDTO> consultaHackathonPerStato(String tipoStatoDesiderato) {
+        List<Hackathon> tuttiGliHackathon = hackathonRep.findAll();
+
+        return tuttiGliHackathon.stream()
+                // Filtra in base al nome della classe dello stato (es. "StatoInIscrizione")
+                // o a un identificativo testuale che restituisce il tuo pattern State
+                .filter(h -> h.getStato().getClass().getSimpleName().equalsIgnoreCase(tipoStatoDesiderato))
+                .map(this::convertiDTO) // Presupponendo che tu abbia un metodo per convertire l'entità in DTO
+                .collect(Collectors.toList());
+    }
+
 
     private HackathonDTO convertiDTO(Hackathon hackathon){
 

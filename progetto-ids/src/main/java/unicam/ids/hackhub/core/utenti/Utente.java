@@ -1,5 +1,5 @@
 package unicam.ids.hackhub.core.utenti;
-//import jakarta.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class Utente {

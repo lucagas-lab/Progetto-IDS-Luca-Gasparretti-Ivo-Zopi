@@ -1,5 +1,8 @@
 package unicam.ids.hackhub.core.team;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
 import unicam.ids.hackhub.core.sottomissioni.Sottomissione;
 import unicam.ids.hackhub.core.utenti.Utente;
 import unicam.ids.hackhub.core.hackathon.Hackathon;
@@ -20,7 +23,7 @@ public class Team {
     @ManyToOne
     @JoinColumn(name="hackathon_id")
     private Hackathon hackathon;
-    JsonIgnore
+    @JsonIgnore
     @OneToOne(mappedBy = "team")
     private Sottomissione sottomissione;
 

@@ -1,13 +1,19 @@
 package unicam.ids.hackhub.core.hackathon;
 
+import jakarta.persistence.*;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+
+
 import unicam.ids.hackhub.core.utenti.Utente;
 import unicam.ids.hackhub.core.team.Team;
 import unicam.ids.hackhub.core.hackathon.StatoHackathon;
-
+import unicam.ids.hackhub.core.hackathon.StatoInIscrizione;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
+@Entity
 public class Hackathon{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
