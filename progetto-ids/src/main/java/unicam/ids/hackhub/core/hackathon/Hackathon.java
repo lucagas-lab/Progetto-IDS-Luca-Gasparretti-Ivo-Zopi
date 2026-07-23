@@ -22,7 +22,8 @@ public class Hackathon{
     @Column(unique = true, nullable = false)
     private String nomeHackathon;
 
-    @Column(nullable = false)
+    @Convert(converter = StatoHackathonConverter.class)
+    @Column(nullable = false, name = "stato_hackathon")
     private StatoHackathon stato;
 
     @Column(nullable = false)

@@ -32,7 +32,7 @@ public class GestoreTeam {
             throw new Exception("Errore: Fai già parte di un team");
         }
 
-        if(teamRep.findByNome(nomeTeam).isPresent()){
+        if(teamRep.findByNomeTeam(nomeTeam).isPresent()){
             throw new Exception("Errore: Esiste già un team con questo nome");
         }
 

@@ -13,16 +13,18 @@ import java.util.List;
 import java.util.Optional;
 
 public interface HackathonRepository extends JpaRepository<Hackathon, Long>{
+
     Optional<Hackathon> findByNomeHackathon(String nomeHackathon);
 
     List<Hackathon> findAll();
+
     void deleteByNomeHackathon(String nomeHackathon);
 
-    List<Hackathon> findByStatoHackathon(StatoHackathon statoHackathon);
+    List<Hackathon> findByStato(StatoHackathon statoHackathon);
 
     List<Hackathon> findByOrganizzatore(Utente organizzatore);
 
-    Optional<Hackathon> findByNomeAndStatoHackathon(String nomeHackathon, StatoHackathon statoHackathon);
+    Optional<Hackathon> findByNomeHackathonAndStato(String nomeHackathon, StatoHackathon statoHackathon);
 
     Optional<Hackathon> findByMentoriContaining(Utente mentore);
 }
