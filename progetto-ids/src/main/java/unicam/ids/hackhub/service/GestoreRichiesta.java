@@ -46,7 +46,7 @@ public class GestoreRichiesta {
 
         // 3. Controllo anti-spam: esiste già una richiesta che NON sia stata rifiutata?
         // Questo blocca le richieste se sono ancora PENDENTI o già ACCETTATE
-        if (richiestaRep.existsByUtenteAndTeamAndEsitoRichiestaNot(utente, team, EsitoRichiesta.RIFIUTATA)) {
+        if (richiestaRep.existsByUtenteAndTeamAndStatoRichiestaNot(utente, team, EsitoRichiesta.RIFIUTATA)) {
             throw new Exception("Errore: Hai già una richiesta attiva per questo team.");
         }
 

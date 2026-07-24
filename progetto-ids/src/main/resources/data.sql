@@ -1,9 +1,9 @@
 -- ==========================================
 -- 1. CREAZIONE DEI TEAM
 -- ==========================================
-INSERT INTO team (nome) VALUES ('Byte Force');
-INSERT INTO team (nome) VALUES ('Algoritmo Ribelle');
-INSERT INTO team (nome) VALUES ('Null Pointers'); -- Team vuoto per testare gli inviti
+INSERT INTO team (nome_team) VALUES ('Byte Force');
+INSERT INTO team (nome_team) VALUES ('Algoritmo Ribelle');
+INSERT INTO team (nome_team) VALUES ('Null Pointers'); -- Team vuoto per testare gli inviti
 
 -- ==========================================
 -- 2. UTENTI CON TEAM

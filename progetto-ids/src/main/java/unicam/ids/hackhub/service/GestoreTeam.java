@@ -1,5 +1,7 @@
 package unicam.ids.hackhub.service;
 
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 import unicam.ids.hackhub.core.team.Team;
 import unicam.ids.hackhub.core.hackathon.Hackathon;
 import unicam.ids.hackhub.dto.TeamDTO;
@@ -10,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Service
+@Transactional
 public class GestoreTeam {
     private final TeamRepository teamRep;
     private final UtenteRepository utenteRep;

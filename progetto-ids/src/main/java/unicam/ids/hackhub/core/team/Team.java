@@ -45,7 +45,7 @@ public class Team {
         return nomeTeam;
     }
 
-    public void setNomeTeam(String nome) { this.nomeTeam = nomeTeam; }
+    public void setNomeTeam(String nomeTeam) { this.nomeTeam = nomeTeam; }
 
     public Hackathon getHackathon() {
         return hackathon;

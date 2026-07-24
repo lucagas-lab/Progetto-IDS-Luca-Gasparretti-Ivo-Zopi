@@ -39,7 +39,7 @@ public class Hackathon{
     private String regolamento;
 
     @ManyToOne
-    @JoinColumn(name = "creatore_id", nullable = false)
+    @JoinColumn(name = "organizzatore_idxs", nullable = false)
     private Utente organizzatore;
 
     @ManyToMany

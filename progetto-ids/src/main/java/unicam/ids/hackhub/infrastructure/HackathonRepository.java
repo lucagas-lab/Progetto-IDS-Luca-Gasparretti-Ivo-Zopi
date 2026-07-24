@@ -12,6 +12,7 @@ import unicam.ids.hackhub.core.utenti.Utente;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface HackathonRepository extends JpaRepository<Hackathon, Long>{
 
     Optional<Hackathon> findByNomeHackathon(String nomeHackathon);

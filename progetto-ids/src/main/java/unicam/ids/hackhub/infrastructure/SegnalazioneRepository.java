@@ -1,14 +1,20 @@
 package unicam.ids.hackhub.infrastructure;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import unicam.ids.hackhub.core.hackathon.Hackathon;
 import unicam.ids.hackhub.core.segnalazioni.Segnalazione;
 import unicam.ids.hackhub.core.team.Team;
-import unicam.ids.hackhub.core.utenti.Utente;
 
 import java.util.List;
 
-public interface SegnalazioneRepository {
-    List<Segnalazione> findByHackathon(Hackathon hackathon);
-    List<Segnalazione> findByHackathonId(List<Hackathon> hackathons);
-    List<Segnalazione> findByTeam(Team team);
+@Repository
+public interface SegnalazioneRepository extends JpaRepository<Segnalazione, Long> {
+
+    //List<Segnalazione> findByHackathon(Hackathon hackathon);
+
+    //List<Segnalazione> findByHackathon_IdHackathon(Long idHackathon);
+
+    //List<Segnalazione> findByTeam(Team team);
 }

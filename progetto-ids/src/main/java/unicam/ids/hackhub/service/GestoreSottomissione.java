@@ -114,8 +114,8 @@ public class GestoreSottomissione {
                 sottomissione.getIdSottomissione(),
                 sottomissione.getTeam().getNomeTeam(),
                 sottomissione.getNome(),
-                sottomissione.getDescrizione(),
                 sottomissione.getLinkRepository(),
+                sottomissione.getDescrizione(),
                 votoAssegnato
         );
     }
