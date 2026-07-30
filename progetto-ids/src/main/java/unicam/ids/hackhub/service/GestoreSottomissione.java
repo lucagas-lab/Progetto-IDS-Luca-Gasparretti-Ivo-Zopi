@@ -46,22 +46,19 @@ public class GestoreSottomissione {
         Team t = teamRep.findByUtentiUsername(creaDTO.getUsernameAutore())
                 .orElseThrow(() -> new Exception("Errore: Devi fare parte di un team"));
 
-        // 2. Controllo: il team ha già inviato qualcosa?
+        // Controllo se il team ha già inviato qualcosa
         if (sottomissioneRep.existsByTeam(t)) {
             throw new Exception("Errore: Sottomissione già esistente per questo team");
         }
 
-        // 3. Verifica l'hackathon
+        // Verifico l'hackathon
         Hackathon h = t.getHackathon();
         if (h == null) {
             throw new Exception("Errore: Hackathon non trovato");
         }
 
-        // delego allo stato il controllo. Se non si può sottomettere,
-        // sarà lo stato stesso a lanciare l'eccezione (es. "L'hackathon è chiuso").
+        // delego allo stato il controllo. Se non si può sottomettere, allo viene lanciata l'eccezione
         h.getStato().verificaPossibilitaSottomissione();
-
-        // --- SE IL CODICE ARRIVA QUI, SIGNIFICA CHE LO STATO È "IN_CORSO" ---
 
         Sottomissione sottomissione = new Sottomissione(t, creaDTO.getNome(), creaDTO.getLinkRepository(), creaDTO.getDescrizione());
 
@@ -71,45 +68,68 @@ public class GestoreSottomissione {
     }
 
     public SottomissioneDTO selezionaSottomissione(Long idSottomissione) throws Exception{
-        // 1. Recupera la sottomissione dal database usando l'ID fornito gratis da JpaRepository
+        //Recupero la sottomissione dal database
         Sottomissione sottomissione= sottomissioneRep.findById(idSottomissione)
                 .orElseThrow(() -> new Exception("Errore: Nessuna sottomissione trovata con ID: " + idSottomissione));
        return convertiDTO(sottomissione);
     }
 
     public void valutaSottomissione(ValutaSottomissioneDTO valutaDTO) throws Exception{
-        // 1. Recupero la sottomissione dal database
+        //Recupero la sottomissione dal database
         Sottomissione sottomissione = sottomissioneRep.findById(valutaDTO.getIdSottomissione())
                 .orElseThrow(() -> new Exception("Errore: Nessuna sottomissione trovata con ID: " + valutaDTO.getIdSottomissione()));
 
-        // 2. Recupero l'Hackathon a cui appartiene la sottomissione
-        // Assumendo che l'entità Team abbia un collegamento all'Hackathon:
+        // Recupero l'Hackathon a cui appartiene la sottomissione
         Hackathon hackathon = sottomissione.getTeam().getHackathon();
 
-        // 3. Verifico se l'hackathon è nello stato corretto ("InValutazione")
-        // Se non lo è, questo metodo lancerà l'eccezione che abbiamo appena scritto negli stati
+        // Verifico se l'hackathon è nello stato corretto ("InValutazione"), se non lo è lancia un'eccezione
         hackathon.getStato().verificaPossibilitaValutazione();
 
-        // 4. creo la nuova valutazione con il voto fornito dal giudice
+        //creo la nuova valutazione con il voto fornito dal giudice
         Valutazione nuovaValutazione = new Valutazione();
         nuovaValutazione.setVoto(valutaDTO.getVoto());
 
-        // 5. Salvo la valutazione nel suo repository
+        //Salvo la valutazione nel suo repository
         nuovaValutazione = valutazioneRep.save(nuovaValutazione);
 
-        // 6. Collego la valutaziona alla sottomissione e aggiorni il database
+        // Collego la valutaziona alla sottomissione e aggiorni il database
         sottomissione.setValutazione(nuovaValutazione);
         sottomissioneRep.save(sottomissione);
     }
 
+    public void aggiornaSottomissione(Long idSottomissione, String nuovaDescrizione, String nuovoLink) throws Exception{
+        // Cerco la sottomissione nel database
+        Sottomissione sottomissione = sottomissioneRep.findById(idSottomissione)
+                .orElseThrow(() -> new Exception("Errore: Sottomissione non trovata con ID " + idSottomissione));
+
+        // Aggiorno i campi solo se non sono vuoti o nulli
+        if (nuovaDescrizione != null && !nuovaDescrizione.trim().isEmpty()) {
+            sottomissione.setDescrizione(nuovaDescrizione);
+        }
+        if (nuovoLink != null && !nuovoLink.trim().isEmpty()) {
+            sottomissione.setLinkRepository(nuovoLink);
+        }
+
+        sottomissioneRep.save(sottomissione);
+    }
+
+
+    public String scaricaSottomissione(Long idSottomissione) throws Exception{
+        //Cerco la sottomissione
+        Sottomissione sottomissione = sottomissioneRep.findById(idSottomissione)
+                .orElseThrow(() -> new Exception("Errore: Sottomissione non trovata con ID " + idSottomissione));
+
+        //Restituisco il link della repository
+        return "Repository del team: " + sottomissione.getLinkRepository() +
+                "\nDescrizione: " + sottomissione.getDescrizione();
+    }
+
     private SottomissioneDTO convertiDTO(Sottomissione sottomissione) {
-        // Estrae il voto in totale sicurezza
         Double votoAssegnato = null;
         if (sottomissione.getValutazione() != null) {
             votoAssegnato = sottomissione.getValutazione().getVoto();
         }
 
-        // Costruisce e ritorna il DTO
         return new SottomissioneDTO(
                 sottomissione.getIdSottomissione(),
                 sottomissione.getTeam().getNomeTeam(),

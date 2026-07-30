@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import unicam.ids.hackhub.dto.AggiornaSottomissioneDTO;
 import unicam.ids.hackhub.dto.SottomissioneDTO;
 import unicam.ids.hackhub.dto.CreaSottomissioneDTO;
 import unicam.ids.hackhub.service.GestoreHackathon;
@@ -42,6 +43,33 @@ public class SottomissioneBoundary {
             return new ResponseEntity<>(sottomissioneDTO, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/{id}/aggiorna")
+    public ResponseEntity<Object> aggiornaSottomissione( @PathVariable("id") Long idSottomissione, @RequestBody AggiornaSottomissioneDTO dto) {
+
+        try {
+            gestoreSottomissione.aggiornaSottomissione(
+                    idSottomissione,
+                    dto.getNuovaDescrizione(),
+                    dto.getNuovoLinkRepository()
+            );
+            return new ResponseEntity<>("Sottomissione aggiornata con successo!", HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/{id}/scarica")
+    public ResponseEntity<Object> scaricaSottomissione(@PathVariable("id") Long idSottomissione) {
+        try {
+            String dettagliSottomissione = gestoreSottomissione.scaricaSottomissione(idSottomissione);
+            return new ResponseEntity<>(dettagliSottomissione, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 }
