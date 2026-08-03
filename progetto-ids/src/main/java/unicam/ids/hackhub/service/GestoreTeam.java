@@ -66,7 +66,6 @@ public class GestoreTeam {
                 .orElseThrow(() -> new Exception("Errore: Team non trovato con ID " + idTeam));
 
         if (nuovoNome != null && !nuovoNome.trim().isEmpty()) {
-            // Controllo che il nuovo nome non esista già
             if (teamRep.findByNomeTeam(nuovoNome).isPresent()) {
                 throw new Exception("Errore: Esiste già un team con questo nome!");
             }
@@ -75,10 +74,39 @@ public class GestoreTeam {
         }
     }
 
+    public void abbandonaTeam(Long idTeam, String usernameUtente) throws Exception {
+        Team team = teamRep.findById(idTeam)
+                .orElseThrow(() -> new Exception("Errore: Team non trovato con ID " + idTeam));
+
+        Utente utente = utenteRep.findByUsername(usernameUtente)
+                .orElseThrow(() -> new Exception("Errore: Utente non trovato nel sistema."));
+
+        team.rimuoviUtente(utente);
+        utente.setTeam(null);
+
+        teamRep.save(team);
+        utenteRep.save(utente);
+
+        if (team.getUtenti().isEmpty()) {
+            teamRep.delete(team);
+        }
+    }
+
+    public void eliminaTeam(Long idTeam) throws Exception {
+        Team team = teamRep.findById(idTeam)
+                .orElseThrow(() -> new Exception("Errore: Team non trovato con ID " + idTeam));
+        for (Utente u : team.getUtenti()) {
+            u.setTeam(null);
+            utenteRep.save(u);
+        }
+        teamRep.delete(team);
+    }
+
     private TeamDTO convertiDTO(Team team) {
         String nomeHackathon = (team.getHackathon() != null)
                 ? team.getHackathon().getNomeHackathon()
                 : "Nessun Hackathon";
+
         List<String> nomiMembri = new ArrayList<>();
 
         if (team.getUtenti() != null) {

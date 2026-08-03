@@ -1,5 +1,6 @@
 package unicam.ids.hackhub.core.utenti;
 import jakarta.persistence.*;
+import unicam.ids.hackhub.core.team.Team;
 
 @Entity
 public class Utente {
@@ -15,6 +16,10 @@ public class Utente {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Ruolo ruolo;
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
+
 
     public Utente(){}
 
@@ -44,4 +49,10 @@ public class Utente {
     public Ruolo getRuolo(){ return ruolo; }
 
     public void setRuolo(Ruolo ruolo){ this.ruolo = ruolo;}
+
+    public Team getTeam(){ return team; }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 }

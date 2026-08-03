@@ -8,12 +8,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 
-import unicam.ids.hackhub.dto.HackathonDTO;
 import unicam.ids.hackhub.dto.ModificaTeamDTO;
 import unicam.ids.hackhub.service.GestoreTeam;
 import unicam.ids.hackhub.dto.TeamDTO;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/team")
@@ -65,6 +62,31 @@ public class TeamBoundary {
             gestoreTeam.modificaTeam(idTeam, dto.getNuovoNomeTeam());
             return new ResponseEntity<>("Nome del Team aggiornato con successo!", HttpStatus.OK);
         } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PreAuthorize("hasAuthority('UTENTE')")
+    @PostMapping("/{id}/abbandona")
+    public ResponseEntity<Object> abbandonaTeam(
+            @PathVariable("id") Long idTeam,
+            Authentication authentication) {
+        try {
+            String username= authentication.getName();
+            gestoreTeam.abbandonaTeam(idTeam, username);
+            return new ResponseEntity<>("Team abbandonato", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PreAuthorize("hasAuthority('UTENTE')")
+    @DeleteMapping("/{id}/elimina")
+    public ResponseEntity<Object> eliminaTeam(@PathVariable("id") Long IdTeam) {
+        try {
+            gestoreTeam.eliminaTeam(IdTeam);
+            return new ResponseEntity<>("Team eliminato", HttpStatus.OK);
+        }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
