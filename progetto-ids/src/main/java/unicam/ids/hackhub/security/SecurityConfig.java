@@ -41,6 +41,10 @@ public class SecurityConfig {
                         .requestMatchers("/hackathon/visualizzaRegolamento/**").permitAll()
                         .requestMatchers("/team/elenco").permitAll()
                         .requestMatchers("/error").permitAll()
+
+                        // Rotte per OpenAPI / Swagger e Postman
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+
                         .anyRequest().authenticated()
                 )
 
