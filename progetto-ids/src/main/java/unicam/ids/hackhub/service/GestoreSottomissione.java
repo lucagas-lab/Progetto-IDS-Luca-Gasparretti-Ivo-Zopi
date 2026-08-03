@@ -75,24 +75,18 @@ public class GestoreSottomissione {
     }
 
     public void valutaSottomissione(ValutaSottomissioneDTO valutaDTO) throws Exception{
-        //Recupero la sottomissione dal database
         Sottomissione sottomissione = sottomissioneRep.findById(valutaDTO.getIdSottomissione())
                 .orElseThrow(() -> new Exception("Errore: Nessuna sottomissione trovata con ID: " + valutaDTO.getIdSottomissione()));
 
-        // Recupero l'Hackathon a cui appartiene la sottomissione
         Hackathon hackathon = sottomissione.getTeam().getHackathon();
 
-        // Verifico se l'hackathon è nello stato corretto ("InValutazione"), se non lo è lancia un'eccezione
         hackathon.getStato().verificaPossibilitaValutazione();
 
-        //creo la nuova valutazione con il voto fornito dal giudice
         Valutazione nuovaValutazione = new Valutazione();
         nuovaValutazione.setVoto(valutaDTO.getVoto());
 
-        //Salvo la valutazione nel suo repository
         nuovaValutazione = valutazioneRep.save(nuovaValutazione);
 
-        // Collego la valutaziona alla sottomissione e aggiorni il database
         sottomissione.setValutazione(nuovaValutazione);
         sottomissioneRep.save(sottomissione);
     }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import unicam.ids.hackhub.dto.CreaHackathonDTO;
 import unicam.ids.hackhub.dto.HackathonDTO;
+import unicam.ids.hackhub.dto.ModificaHackathonDTO;
 import unicam.ids.hackhub.service.GestoreHackathon;
 
 import java.util.List;
@@ -89,6 +90,45 @@ public class HackathonBoundary {
             gestoreHackathon.iscriviTeam(idHackathon, idTeam);
             return new ResponseEntity<>("Team iscritto con successo all'Hackathon", HttpStatus.OK);
         }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @GetMapping("/{id}/visualizza")
+    public ResponseEntity<Object> visualizzaHackathon(@PathVariable("id") Long idHackathon) {
+        try {
+            HackathonDTO hackathonDTO = gestoreHackathon.visualizzaHackathon(idHackathon);
+            return new ResponseEntity<>(hackathonDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PreAuthorize("hasAuthority('ORGANIZZATORE')") // Solo chi organizza può modificare!
+    @PutMapping("/{id}/modifica")
+    public ResponseEntity<Object> modificaHackathon(
+            @PathVariable("id") Long idHackathon,
+            @RequestBody ModificaHackathonDTO dto) {
+        try {
+            gestoreHackathon.modificaHackathon(
+                    idHackathon,
+                    dto.getPremio(),
+                    dto.getDimensioneTeam(),
+                    dto.getRegolamento()
+            );
+            return new ResponseEntity<>("Hackathon modificato con successo!", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PreAuthorize("hasAuthority('ORGANIZZATORE')") // Solo chi organizza può eliminare!
+    @DeleteMapping("/{id}/elimina")
+    public ResponseEntity<Object> eliminaHackathon(@PathVariable("id") Long idHackathon) {
+        try {
+            gestoreHackathon.eliminaHackathon(idHackathon);
+            return new ResponseEntity<>("Hackathon eliminato con successo dal sistema!", HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

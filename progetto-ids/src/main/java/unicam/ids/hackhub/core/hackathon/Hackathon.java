@@ -111,7 +111,12 @@ public class Hackathon{
     }
 
     public String getRegolamento(){return regolamento;}
+
     public void setRegolamento(String regolamento){this.regolamento=regolamento;}
+
+    public void setPremio(Double premio){this.premio=premio;}
+
+    public void setDimenisoneTeam(int dimenisoneTeam){this.dimenisoneTeam=dimenisoneTeam;}
 
     public Utente getOrganizzatore() {
         return organizzatore;

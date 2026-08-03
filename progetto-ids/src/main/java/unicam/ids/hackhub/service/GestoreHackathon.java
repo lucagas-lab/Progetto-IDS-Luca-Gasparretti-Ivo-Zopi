@@ -100,7 +100,6 @@ public class GestoreHackathon {
     }
 
     public List<HackathonDTO> consultaElencoHackathon(){
-
         List<Hackathon> listaHackathon = hackathonRep.findAll();
         return listaHackathon.stream()
                 .map(this::convertiDTO)
@@ -117,7 +116,6 @@ public class GestoreHackathon {
 
     public List<HackathonDTO> consultaHackathonPerStato(String tipoStatoDesiderato) {
 
-        // 1. Creiamo l'oggetto di stato corrispondente alla stringa richiesta
         StatoHackathon statoDaCercare;
         switch (tipoStatoDesiderato) {
             case "In corso":
@@ -135,38 +133,66 @@ public class GestoreHackathon {
                 break;
         }
 
-        // 2. Facciamo filtrare direttamente al database tramite il Repository!
         List<Hackathon> hackathonFiltrati = hackathonRep.findByStato(statoDaCercare);
 
-        // 3. Convertiamo i risultati in DTO
         return hackathonFiltrati.stream()
                 .map(this::convertiDTO)
                 .collect(Collectors.toList());
     }
 
+    //METODO PER VISUALIZZARE UN SINGOLO HACKATHON
+    public HackathonDTO visualizzaHackathon(Long idHackathon) throws Exception {
+        Hackathon hackathon = hackathonRep.findById(idHackathon)
+                .orElseThrow(() -> new Exception("Errore: Hackathon non trovato con ID " + idHackathon));
+
+        return convertiDTO(hackathon);
+    }
+
+    // METODO PER MODIFICARE UN HACKATHON
+    public void modificaHackathon(Long idHackathon, Double nuovoPremio, Integer nuovaDimensione, String nuovoRegolamento) throws Exception {
+        Hackathon hackathon = hackathonRep.findById(idHackathon)
+                .orElseThrow(() -> new Exception("Errore: Hackathon non trovato con ID " + idHackathon));
+
+
+        if (nuovoPremio != null && nuovoPremio >= 100) {
+            hackathon.setPremio(nuovoPremio);
+        }
+        if (nuovaDimensione != null && nuovaDimensione >= 1) {
+            hackathon.setDimenisoneTeam(nuovaDimensione);
+        }
+        if (nuovoRegolamento != null && !nuovoRegolamento.trim().isEmpty()) {
+            hackathon.setRegolamento(nuovoRegolamento);
+        }
+
+        hackathonRep.save(hackathon);
+    }
+
+    //METODO PER ELIMINARE UN HACKATHON
+    public void eliminaHackathon(Long idHackathon) throws Exception {
+        if (!hackathonRep.existsById(idHackathon)) {
+            throw new Exception("Errore: Impossibile eliminare. Nessun Hackathon trovato con ID " + idHackathon);
+        }
+
+        hackathonRep.deleteById(idHackathon);
+    }
 
     private HackathonDTO convertiDTO(Hackathon hackathon){
 
-        // 2. Prepariamo i dati complessi prima di inserirli nel costruttore
-        // Gestione sicura della data (se presente)
         String dataInizioStr = (hackathon.getDataInizio() != null)
                 ? hackathon.getDataInizio().toString()
                 : "Data non definita";
 
-        // Gestione dello stato (assumendo che getStato() restituisca un enum o un oggetto)
         String statoStr = (hackathon.getStato() != null)
                 ? hackathon.getStato().toString()
                 : "Sconosciuto";
 
-        // Conversione: Da List<Team> a List<String> (solo i nomi)
         List<String> nomiTeam = new ArrayList<>();
         if (hackathon.getTeamPartecipanti() != null) {
             nomiTeam = hackathon.getTeamPartecipanti().stream()
-                    .map(Team::getNomeTeam) // Usa il getter corretto della tua entità Team
+                    .map(Team::getNomeTeam)
                     .collect(Collectors.toList());
         }
 
-        // Conversione: Da List<Utente> a List<String> (nomi ed email dei mentori)
         List<String> nomiMentori = new ArrayList<>();
         List<String> emailMentori = new ArrayList<>();
         if (hackathon.getMentori() != null) {
@@ -179,9 +205,8 @@ public class GestoreHackathon {
                     .collect(Collectors.toList());
         }
 
-        // 3. Costruiamo e restituiamo il DTO finale!
         return new HackathonDTO(
-                hackathon.getNomeHackathon(), // o getNome() in base a come l'hai chiamato nell'entità
+                hackathon.getNomeHackathon(),
                 hackathon.getPremio(),
                 hackathon.getDimenisoneTeam(),
                 dataInizioStr,
