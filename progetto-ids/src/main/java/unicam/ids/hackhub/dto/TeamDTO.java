@@ -4,21 +4,19 @@ import java.util.List;
 
 
 public class TeamDTO {
-    private Long id;
+    private Long idTeam;
     private String nomeTeam;
     private String nomeHackathon;
     private List<String> nomeMembri;
-    private List<String> emailMembri;
 
-    public TeamDTO(Long id, String nomeTeam, String nomeHackathon, List<String> nomeMembri, List<String> emailMembri) {
-        this.id = id;
+    public TeamDTO(Long idTeam, String nomeTeam, String nomeHackathon, List<String> nomeMembri) {
+        this.idTeam = idTeam;
         this.nomeTeam = nomeTeam;
         this.nomeHackathon = nomeHackathon;
         this.nomeMembri = nomeMembri;
-        this.emailMembri = emailMembri;
     }
 
-    public Long getId() { return id; }
+    public Long getIdTeam() { return idTeam; }
 
     public String getNomeTeam() { return nomeTeam; }
 
@@ -26,5 +24,4 @@ public class TeamDTO {
 
     public List<String> getNomeMembri() { return nomeMembri; }
 
-    public List<String> getEmailMembri() { return emailMembri; }
 }

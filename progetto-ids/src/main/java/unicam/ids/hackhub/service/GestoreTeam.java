@@ -51,33 +51,48 @@ public class GestoreTeam {
         return convertiDTO(selezioneTeam);
     }
 
+    public TeamDTO visualizzaTeam(Long idTeam) throws Exception {
+        Team team = teamRep.findById(idTeam)
+                .orElseThrow(() -> new Exception("Errore: Team non trovato con ID " + idTeam));
+        List<String> usernameMembri = team.getUtenti().stream()
+                .map(Utente::getUsername)
+                .collect(Collectors.toList());
+        String nomeHackathon = (team.getHackathon() != null) ? team.getHackathon().getNomeHackathon() : "Nessun Hackathon";
+        return new TeamDTO(team.getTeamId(), team.getNomeTeam(), nomeHackathon, usernameMembri);
+    }
+
+    public void modificaTeam(Long idTeam, String nuovoNome) throws Exception {
+        Team team = teamRep.findById(idTeam)
+                .orElseThrow(() -> new Exception("Errore: Team non trovato con ID " + idTeam));
+
+        if (nuovoNome != null && !nuovoNome.trim().isEmpty()) {
+            // Controllo che il nuovo nome non esista già
+            if (teamRep.findByNomeTeam(nuovoNome).isPresent()) {
+                throw new Exception("Errore: Esiste già un team con questo nome!");
+            }
+            team.setNomeTeam(nuovoNome);
+            teamRep.save(team);
+        }
+    }
+
     private TeamDTO convertiDTO(Team team) {
-        // 1. Estrae il nome dell'hackathon (se iscritto)
         String nomeHackathon = (team.getHackathon() != null)
                 ? team.getHackathon().getNomeHackathon()
                 : "Nessun Hackathon";
-
-        // 2. Estrae le liste di nomi ed email in modo sicuro
         List<String> nomiMembri = new ArrayList<>();
-        List<String> emailMembri = new ArrayList<>();
 
         if (team.getUtenti() != null) {
             nomiMembri = team.getUtenti().stream()
                     .map(Utente::getUsername)
                     .collect(Collectors.toList());
 
-            emailMembri = team.getUtenti().stream()
-                    .map(Utente::getEmail)
-                    .collect(Collectors.toList());
         }
 
-        // 3. Ritorna il DTO usando il costruttore che hai appena creato
         return new TeamDTO(
                 team.getTeamId(),
                 team.getNomeTeam(),
                 nomeHackathon,
-                nomiMembri,
-                emailMembri
+                nomiMembri
         );
     }
 }

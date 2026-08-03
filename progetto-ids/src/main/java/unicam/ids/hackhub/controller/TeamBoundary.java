@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import unicam.ids.hackhub.dto.HackathonDTO;
+import unicam.ids.hackhub.dto.ModificaTeamDTO;
 import unicam.ids.hackhub.service.GestoreTeam;
 import unicam.ids.hackhub.dto.TeamDTO;
 
@@ -40,6 +41,29 @@ public class TeamBoundary {
         try {
             TeamDTO teamDTO = gestoreTeam.selezionaTeam(idTeam);
             return new ResponseEntity<>(teamDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/{id}/visualizza")
+    public ResponseEntity<Object> visualizzaTeam(@PathVariable("id") Long idTeam) {
+        try {
+            TeamDTO teamDTO = gestoreTeam.visualizzaTeam(idTeam);
+            return new ResponseEntity<>(teamDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PreAuthorize("hasAuthority('UTENTE')")
+    @PutMapping("/{id}/modifica")
+    public ResponseEntity<Object> modificaTeam(
+            @PathVariable("id") Long idTeam,
+            @RequestBody ModificaTeamDTO dto) {
+        try {
+            gestoreTeam.modificaTeam(idTeam, dto.getNuovoNomeTeam());
+            return new ResponseEntity<>("Nome del Team aggiornato con successo!", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

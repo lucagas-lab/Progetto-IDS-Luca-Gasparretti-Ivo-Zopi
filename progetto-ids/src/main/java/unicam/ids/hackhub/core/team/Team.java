@@ -63,7 +63,8 @@ public class Team {
         this.utenti.add(utente);
     }
 
-    public void rimuoviUtente(Utente utente) { this.utenti.remove(utente); }
+    public void rimuoviUtente(Utente utente) {
+        if(this.utenti != null) this.utenti.remove(utente); }
 
     public Sottomissione getSottomissione() {
         return sottomissione;
