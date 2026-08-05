@@ -93,7 +93,7 @@ public class HackathonBoundary {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @GetMapping("/{id}/visualizza")
     public ResponseEntity<Object> visualizzaHackathon(@PathVariable("id") Long idHackathon) {
         try {
