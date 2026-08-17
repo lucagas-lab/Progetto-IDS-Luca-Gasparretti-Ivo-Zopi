@@ -7,6 +7,5 @@ import java.util.List;
 
 @Repository
 public interface SupportoRepository extends JpaRepository<Supporto, Long> {
-
-    //List<Supporto> findByHackathon_IdHackathon(Long idHackathon);
+    List<Supporto> findByTeam_Hackathon_IdHackathon(Long idHackathon);
 }
