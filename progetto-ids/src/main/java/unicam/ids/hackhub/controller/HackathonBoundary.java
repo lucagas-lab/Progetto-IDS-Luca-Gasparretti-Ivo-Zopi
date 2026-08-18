@@ -69,9 +69,9 @@ public class HackathonBoundary {
                 return new ResponseEntity<>("Nessun Hackathon nel sistema", HttpStatus.OK);
             }
             return new ResponseEntity<>(elenco, HttpStatus.OK);
-        }catch(Exception e){
-                return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/visualizzaRegolamento/{id}")
@@ -89,7 +89,7 @@ public class HackathonBoundary {
         try {
             gestoreHackathon.iscriviTeam(idHackathon, idTeam);
             return new ResponseEntity<>("Team iscritto con successo all'Hackathon", HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -156,8 +156,11 @@ public class HackathonBoundary {
             @PathVariable String nomeHackathon,
             @PathVariable String usernameMentore
     ) {
-
-        gestoreHackathon.rimuoviMentore(authentication, nomeHackathon, usernameMentore);
-        return ResponseEntity.ok("Mentore rimosso con successo");
+        try {
+            gestoreHackathon.rimuoviMentore(authentication, nomeHackathon, usernameMentore);
+            return ResponseEntity.ok("Mentore rimosso con successo");
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

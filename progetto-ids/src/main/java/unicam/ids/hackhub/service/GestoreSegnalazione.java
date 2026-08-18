@@ -2,8 +2,10 @@ package unicam.ids.hackhub.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import unicam.ids.hackhub.core.hackathon.Hackathon;
 import unicam.ids.hackhub.core.segnalazioni.Segnalazione;
 import unicam.ids.hackhub.core.team.Team;
+import unicam.ids.hackhub.core.utenti.Ruolo;
 import unicam.ids.hackhub.core.utenti.Utente;
 import unicam.ids.hackhub.dto.SegnalazioneDTO;
 import unicam.ids.hackhub.infrastructure.SegnalazioneRepository;
@@ -44,5 +46,31 @@ public class GestoreSegnalazione {
 
         Segnalazione segnalazione = new Segnalazione(mentore, teamSospettato, descrizione);
         segnalazioneRep.save(segnalazione);
+    }
+
+
+    public List<SegnalazioneDTO> visualizzaSegnalazione(String username) {
+        Utente utente = utenteRep.findByUsername(username).orElse(null);
+
+        // Primo blocco 'break': controlla se l'utente esiste ed è un ORGANIZZATORE
+        if (utente == null || utente.getRuolo() != Ruolo.ORGANIZZATORE) {
+            throw new IllegalArgumentException("errore");
+        }
+
+        // 2. Recupera gli hackathon gestiti dall'organizzatore
+        List<Hackathon> hackathons = hackathonRep.findByOrganizzatore(utente);
+
+        // Secondo blocco 'break': controlla se la lista di hackathon è vuota
+        if (hackathons.isEmpty()) {
+            throw new IllegalStateException("Non gestisce hackathon");
+        }
+
+        // 3. Recupera le segnalazioni associate agli hackathon trovati
+        List<Segnalazione> segnalazioni = segnalazioneRep.findByHackathonIn(hackathons);
+
+        // 4. Converte le entità Segnalazione in SegnalazioneDTO e restituisce la lista
+        return segnalazioni.stream()
+                .map(SegnalazioneDTO::new) // O il tuo metodo/mapper di conversione DTO
+                .toList();
     }
 }

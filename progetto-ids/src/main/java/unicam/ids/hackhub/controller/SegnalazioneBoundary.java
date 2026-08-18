@@ -38,4 +38,18 @@ public class SegnalazioneBoundary {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PreAuthorize("hasAuthority('MENTORE')")
+    @GetMapping("/segnalazione")
+    public ResponseEntity<Object> visualizzaSegnalazione(Authentication authentication) {
+
+        try {
+            String username = authentication.getName();
+
+            List<SegnalazioneDTO> segnalazioni = gestoreSegnalazione.visualizzaSegnalazione(username);
+            return ResponseEntity.ok(segnalazioni);
+        } catch(Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
