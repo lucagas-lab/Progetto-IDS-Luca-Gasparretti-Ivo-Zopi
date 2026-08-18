@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class GestoreHackathon {
 
     private final HackathonRepository hackathonRep;
-    private final UtenteRepository  utenteRep;
+    private final UtenteRepository utenteRep;
     private final TeamRepository teamRep;
 
     public GestoreHackathon(HackathonRepository hackathonRep, UtenteRepository utenteRep, TeamRepository teamRep) {
@@ -32,21 +32,21 @@ public class GestoreHackathon {
     }
 
     public void creaHackathon(String nomeHackathon, Double premio, Integer dimensioneTeam, String regolamento, String userOrganizzatore,
-                              String userGiudice, List<String> userMentori) throws Exception{
+                              String userGiudice, List<String> userMentori) throws Exception {
 
-        if(hackathonRep.findByNomeHackathon(nomeHackathon).isPresent() || nomeHackathon.isEmpty()){
+        if (hackathonRep.findByNomeHackathon(nomeHackathon).isPresent() || nomeHackathon.isEmpty()) {
             throw new Exception("Nome per l'hackathon non valido");
         }
 
-        if(premio.isNaN() || premio < 100){
+        if (premio.isNaN() || premio < 100) {
             throw new Exception("Premio non valido");
         }
 
-        if(dimensioneTeam == null || dimensioneTeam<1){
+        if (dimensioneTeam == null || dimensioneTeam < 1) {
             throw new Exception("Dimensione team non valida");
         }
 
-        if(regolamento == null||regolamento.isEmpty()){
+        if (regolamento == null || regolamento.isEmpty()) {
             System.out.println(regolamento);
             throw new Exception("Regolamento non valido");
         }
@@ -55,16 +55,16 @@ public class GestoreHackathon {
                 () -> new Exception("Giudice non esistente")
         );
 
-        if(giudice.getRuolo()!= Ruolo.GIUDICE){
+        if (giudice.getRuolo() != Ruolo.GIUDICE) {
             throw new Exception("Il giudice deve avere il ruolo GIUDICE");
         }
 
-        List<Utente> mentori= new ArrayList<>() {
+        List<Utente> mentori = new ArrayList<>() {
         };
-        for(String user: userMentori){
-            Utente mentore=utenteRep.findByUsername(user).orElseThrow(
+        for (String user : userMentori) {
+            Utente mentore = utenteRep.findByUsername(user).orElseThrow(
                     () -> new Exception("Mentore non esistente"));
-            if(mentore.getRuolo()!=Ruolo.MENTORE){
+            if (mentore.getRuolo() != Ruolo.MENTORE) {
                 throw new Exception("Il mentore deve avere il ruolo MENTORE");
             }
             mentori.add(mentore);
@@ -80,14 +80,14 @@ public class GestoreHackathon {
 
     }
 
-    public void iscriviTeam(Long idTeam, Long idHackathon) throws Exception{
+    public void iscriviTeam(Long idTeam, Long idHackathon) throws Exception {
         Hackathon hackathon = hackathonRep.findById(idHackathon)
                 .orElseThrow(() -> new Exception("Errore: L'Hackathon con l'ID richiesto non esiste: " + idHackathon));
         Team team = teamRep.findById(idTeam)
                 .orElseThrow(() -> new Exception("Errore: Il team non esiste: " + idTeam));
-        if(team.getHackathon() == hackathon){
+        if (team.getHackathon() == hackathon) {
             throw new Exception("Errore: Il team è già iscritto all'Hackathon");
-            }
+        }
         hackathon.addTeam(team);
         team.setHackathon(hackathon);
         teamRep.save(team);
@@ -96,20 +96,20 @@ public class GestoreHackathon {
 
     public String visualizzaRegolamento(Long idHackathon) throws Exception {
         Hackathon regolamento = hackathonRep.findById(idHackathon)
-                .orElseThrow(()-> new Exception("Errore: L'Hackathon con l'ID richiesto non esiste: " + idHackathon));
+                .orElseThrow(() -> new Exception("Errore: L'Hackathon con l'ID richiesto non esiste: " + idHackathon));
         return regolamento.getRegolamento();
     }
 
-    public List<HackathonDTO> consultaElencoHackathon(){
+    public List<HackathonDTO> consultaElencoHackathon() {
         List<Hackathon> listaHackathon = hackathonRep.findAll();
         return listaHackathon.stream()
                 .map(this::convertiDTO)
                 .collect(Collectors.toList());
     }
 
-    public HackathonDTO selezionaHackathon(Long idHackathon) throws Exception{
+    public HackathonDTO selezionaHackathon(Long idHackathon) throws Exception {
         Hackathon hackathon = hackathonRep.findById(idHackathon)
-                .orElseThrow(()-> new Exception("Errore: Nessun Hackathon trovato con ID: " + idHackathon));
+                .orElseThrow(() -> new Exception("Errore: Nessun Hackathon trovato con ID: " + idHackathon));
 
 
         return convertiDTO(hackathon);
@@ -197,7 +197,33 @@ public class GestoreHackathon {
         hackathonRep.save(hackathon);
     }
 
-    private HackathonDTO convertiDTO(Hackathon hackathon){
+    public void rimuoviMentore(Authentication authentication, String nomeHackathon, String usernameMentore) {
+
+        Hackathon hackathon = hackathonRep.findByNomeHackathon(nomeHackathon)
+                .orElseThrow(() -> new IllegalArgumentException("Hackathon non esistente"));
+
+        String nomeStato = hackathon.getStato().getNomeStato();
+        if ("TERMINATO".equals(nomeStato) || "IN_CORSO".equals(nomeStato)) { // adatta la condizione alle tue esigenze
+            throw new IllegalStateException("Impossibile rimuovere il mentore");
+        }
+
+        Utente utente = utenteRep.findByUsername(usernameMentore)
+                .orElseThrow(() -> new IllegalArgumentException("errore"));
+
+        if (utente.getRuolo() != Ruolo.MENTORE) {
+            throw new IllegalArgumentException("errore");
+        }
+
+        List<Utente> mentori = hackathon.getMentori();
+        if (mentori.size() <= 1 && mentori.contains(utente)) {
+            throw new IllegalStateException("Errore: ultimo mentore rimasto");
+        }
+
+        hackathon.getMentori().remove(utente);
+        hackathonRep.save(hackathon);
+    }
+
+    private HackathonDTO convertiDTO(Hackathon hackathon) {
 
         String dataInizioStr = (hackathon.getDataInizio() != null)
                 ? hackathon.getDataInizio().toString()

@@ -148,4 +148,16 @@ public class HackathonBoundary {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PreAuthorize("hasAuthority('ORGANIZZATORE')")
+    @DeleteMapping("/{nomeHackathon}/mentori/{username}")
+    public ResponseEntity<String> rimuoviMentore(
+            @PathVariable Authentication authentication,
+            @PathVariable String nomeHackathon,
+            @PathVariable String usernameMentore
+    ) {
+
+        gestoreHackathon.rimuoviMentore(authentication, nomeHackathon, usernameMentore);
+        return ResponseEntity.ok("Mentore rimosso con successo");
+    }
 }
