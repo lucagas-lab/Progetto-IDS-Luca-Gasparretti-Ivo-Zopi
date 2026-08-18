@@ -132,4 +132,20 @@ public class HackathonBoundary {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PreAuthorize("hasAuthority('ORGANIZZATORE')")
+    @PutMapping("/{nomeHackathon}/mentori")
+    public ResponseEntity<Object> assegnaMentore(
+            @PathVariable Authentication authentication,
+            @PathVariable String nomeHackathon,
+            @PathVariable String usernameMentore
+    ) {
+        try {
+            gestoreHackathon.assegnaMentore(authentication, nomeHackathon, usernameMentore);
+            return new ResponseEntity<>("Mentore assegnato con successo!", HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

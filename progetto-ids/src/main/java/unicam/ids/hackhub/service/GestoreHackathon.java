@@ -1,5 +1,6 @@
 package unicam.ids.hackhub.service;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -174,6 +175,26 @@ public class GestoreHackathon {
         }
 
         hackathonRep.deleteById(idHackathon);
+    }
+
+    public void assegnaMentore(Authentication authentication, String nomeHackathon, String usernameMentore) {
+
+        Hackathon hackathon = hackathonRep.findByNomeHackathon(nomeHackathon)
+                .orElseThrow(() -> new IllegalArgumentException("Hackathon non esistente"));
+
+        if (hackathon.getStato() == StatoHackathon.CONCLUSO) {
+            throw new IllegalStateException("Impossibile aggiungere mentore");
+        }
+
+        Utente mentore = utenteRep.findByUsername(usernameMentore)
+                .orElseThrow(() -> new IllegalArgumentException("errore"));
+
+        if (hackathon.getMentori().contains(mentore)) {
+            throw new IllegalStateException("Mentore già presente");
+        }
+
+        hackathon.getMentori().add(mentore);
+        hackathonRep.save(hackathon);
     }
 
     private HackathonDTO convertiDTO(Hackathon hackathon){
