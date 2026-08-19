@@ -8,6 +8,7 @@ import unicam.ids.hackhub.core.team.Team;
 import unicam.ids.hackhub.core.utenti.Ruolo;
 import unicam.ids.hackhub.core.utenti.Utente;
 import unicam.ids.hackhub.dto.SegnalazioneDTO;
+import unicam.ids.hackhub.infrastructure.HackathonRepository;
 import unicam.ids.hackhub.infrastructure.SegnalazioneRepository;
 import unicam.ids.hackhub.infrastructure.UtenteRepository;
 import unicam.ids.hackhub.infrastructure.TeamRepository;
@@ -21,11 +22,14 @@ public class GestoreSegnalazione {
     private final SegnalazioneRepository segnalazioneRep;
     private final UtenteRepository utenteRep;
     private final TeamRepository teamRep;
+    private final HackathonRepository hackathonRep;
 
-    public GestoreSegnalazione(SegnalazioneRepository segnalazioneRep, UtenteRepository utenteRep, TeamRepository teamRep) {
+    public GestoreSegnalazione(SegnalazioneRepository segnalazioneRep, UtenteRepository utenteRep, TeamRepository teamRep,
+                               HackathonRepository hackathonRep) {
         this.segnalazioneRep = segnalazioneRep;
         this.utenteRep = utenteRep;
         this.teamRep = teamRep;
+        this.hackathonRep = hackathonRep;
     }
 
     public void segnalaViolazione(String usernameMentore, Long idTeamSospettato, String descrizione) throws Exception {
@@ -66,11 +70,16 @@ public class GestoreSegnalazione {
         }
 
         // 3. Recupera le segnalazioni associate agli hackathon trovati
-        List<Segnalazione> segnalazioni = segnalazioneRep.findByHackathonIn(hackathons);
+        List<Segnalazione> segnalazioni = segnalazioneRep.findByTeamSospettato_HackathonIn(hackathons);
 
         // 4. Converte le entità Segnalazione in SegnalazioneDTO e restituisce la lista
         return segnalazioni.stream()
-                .map(SegnalazioneDTO::new) // O il tuo metodo/mapper di conversione DTO
+                .map(s -> new SegnalazioneDTO(
+                        s.getIdSegnalazione(),
+                        s.getMentore().getUsername(),
+                        s.getTeamSospettato().getNomeTeam(),
+                        s.getDescrizione()
+                ))
                 .toList();
     }
 }

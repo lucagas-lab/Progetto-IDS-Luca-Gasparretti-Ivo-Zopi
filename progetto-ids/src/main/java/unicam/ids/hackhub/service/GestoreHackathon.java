@@ -177,35 +177,54 @@ public class GestoreHackathon {
         hackathonRep.deleteById(idHackathon);
     }
 
-    public void assegnaMentore(Authentication authentication, String nomeHackathon, String usernameMentore) {
+    public void assegnaMentore(Authentication usernameOrganizzatore, String nomeHackathon, String usernameMentore) {
 
+        // 1. Recupera l'hackathon
         Hackathon hackathon = hackathonRep.findByNomeHackathon(nomeHackathon)
                 .orElseThrow(() -> new IllegalArgumentException("Hackathon non esistente"));
 
-        if (hackathon.getStato() == StatoHackathon.CONCLUSO) {
-            throw new IllegalStateException("Impossibile aggiungere mentore");
+        // 2. Verifica lo stato dell'hackathon
+        if (hackathon.getStato().getNomeStato().equals("CONCLUSO")) {
+            throw new IllegalStateException("Impossibile aggiungere mentore: hackathon concluso");
         }
 
+        if (!hackathon.getOrganizzatore().getUsername().equals(usernameOrganizzatore)) {
+            throw new IllegalStateException("Errore: Non sei il creatore di questo hackathon.");
+        }
+
+        // 4. Recupera l'utente da assegnare
         Utente mentore = utenteRep.findByUsername(usernameMentore)
-                .orElseThrow(() -> new IllegalArgumentException("errore"));
+                .orElseThrow(() -> new IllegalArgumentException("Utente non trovato"));
 
-        if (hackathon.getMentori().contains(mentore)) {
-            throw new IllegalStateException("Mentore già presente");
+        // 5. NUOVO CONTROLLO: L'utente trovato è davvero un mentore?
+        if (mentore.getRuolo() != Ruolo.MENTORE) {
+            throw new IllegalArgumentException("Errore: L'utente specificato non ha il ruolo di Mentore.");
         }
 
+        // 6. Verifica che non sia già stato assegnato
+        if (hackathon.getMentori().contains(mentore)) {
+            throw new IllegalStateException("Mentore già presente in questo hackathon");
+        }
+
+        // 7. Salva
         hackathon.getMentori().add(mentore);
         hackathonRep.save(hackathon);
     }
 
-    public void rimuoviMentore(Authentication authentication, String nomeHackathon, String usernameMentore) {
+    public void rimuoviMentore(Authentication usernameOrganizzatore, String nomeHackathon, String usernameMentore) {
 
         Hackathon hackathon = hackathonRep.findByNomeHackathon(nomeHackathon)
                 .orElseThrow(() -> new IllegalArgumentException("Hackathon non esistente"));
+
+        if (!hackathon.getOrganizzatore().getUsername().equals(usernameOrganizzatore)) {
+            throw new IllegalStateException("Errore: Non sei il creatore di questo hackathon.");
+        }
 
         String nomeStato = hackathon.getStato().getNomeStato();
         if ("TERMINATO".equals(nomeStato) || "IN_CORSO".equals(nomeStato)) { // adatta la condizione alle tue esigenze
             throw new IllegalStateException("Impossibile rimuovere il mentore");
         }
+
 
         Utente utente = utenteRep.findByUsername(usernameMentore)
                 .orElseThrow(() -> new IllegalArgumentException("errore"));
@@ -215,7 +234,9 @@ public class GestoreHackathon {
         }
 
         List<Utente> mentori = hackathon.getMentori();
-        if (mentori.size() <= 1 && mentori.contains(utente)) {
+        if(!mentori.contains(utente)) throw new IllegalArgumentException("Errore: il mentore non fa parte di questo Hackathon.");
+        if (mentori.size() <= 1)
+            {
             throw new IllegalStateException("Errore: ultimo mentore rimasto");
         }
 
