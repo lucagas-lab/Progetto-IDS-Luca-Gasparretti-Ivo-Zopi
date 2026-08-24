@@ -2,8 +2,7 @@ package unicam.ids.hackhub.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
+import javax.crypto.SecretKey;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -13,29 +12,29 @@ import java.util.Date;
 public class JwtUtil {
 
     // Genera la chiave crittografica all'avvio dell'applicazione
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final SecretKey key = Jwts.SIG.HS256.key().build();
 
     // Durata del token: 1 giorno (in millisecondi)
     private final long EXPIRATION_TIME = 86400000;
 
-    // Genera il token includendo username e ruolo
+
     public String generateToken(String username, String ruolo) {
         return Jwts.builder()
-                .setSubject(username)
-                .claim("ruolo", ruolo)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .subject(username) // Invece di setSubject
+                .claim("ruolo", ruolo) // Se vuoi aggiungere il ruolo nel payload
+                .issuedAt(new Date(System.currentTimeMillis())) // Invece di setIssuedAt
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)) // Invece di setExpiration
                 .signWith(key)
                 .compact();
     }
 
-    // Estrae le informazioni (Claims) dal token per verificarlo
+
     public Claims extractClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
+        return Jwts.parser()
+                .verifyWith(key)
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     // Controlla se il token è valido e non è scaduto

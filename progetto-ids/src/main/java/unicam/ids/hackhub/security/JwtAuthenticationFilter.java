@@ -38,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String ruolo = claims.get("ruolo", String.class);
 
                 // MODIFICA FONDAMENTALE: Aggiunto "ROLE_" per allinearsi al CustomUserDetailsService
-                SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + ruolo);
+                SimpleGrantedAuthority authority = new SimpleGrantedAuthority(ruolo);
 
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         username, null, Collections.singletonList(authority));

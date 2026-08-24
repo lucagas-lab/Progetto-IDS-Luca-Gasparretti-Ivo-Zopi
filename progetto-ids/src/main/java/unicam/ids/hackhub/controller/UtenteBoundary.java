@@ -47,7 +47,7 @@ public class UtenteBoundary {
         }
     }
 
-    @PostMapping("/registra") // M maiuscola!
+    @PostMapping("/registra")
     public ResponseEntity<String> effettuaRegistrazione(@RequestBody RegistrazioneUtenteDTO dto){
         try{
             gestoreUtente.effettuaRegistrazione(
@@ -59,7 +59,7 @@ public class UtenteBoundary {
         }
     }
 
-    @PostMapping("/login") // M maiuscola!
+    @PostMapping("/login")
     public ResponseEntity<String> effettuaLogin(@RequestBody LoginRequest request){
         try{
             // Il gestore ci restituisce il VERO token JWT

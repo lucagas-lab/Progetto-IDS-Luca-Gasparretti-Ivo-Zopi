@@ -28,7 +28,7 @@ public class HackathonBoundary {
     @PreAuthorize("hasAuthority('ORGANIZZATORE')")
     @PostMapping("/crea")
     public ResponseEntity<Object> creaHackathon(Authentication authentication,
-                                                @RequestBody CreaHackathonDTO creaDTO) {
+                                                @ModelAttribute CreaHackathonDTO creaDTO) {
 
         String nomeHackhathon = creaDTO.getNomeHackathon();
         Double premio = creaDTO.getPremio();
