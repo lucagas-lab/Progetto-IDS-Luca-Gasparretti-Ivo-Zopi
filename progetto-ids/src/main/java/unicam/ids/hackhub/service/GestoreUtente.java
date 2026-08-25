@@ -51,7 +51,7 @@ public class GestoreUtente {
         utenteRep.save(utenteLoggato);
     }
 
-    public void effettuaRegistrazione(String email, String username, String password, String ruolo) throws Exception{
+    public void effettuaRegistrazione(String username, String email, String password, String ruolo) throws Exception{
         if(email == null || !email.contains("@")){
             throw new Exception("Email non valida");
         }
@@ -71,8 +71,8 @@ public class GestoreUtente {
         String passwordCriptata = passwordEncoder.encode(password);
 
         utenteBuilder.resetUtente();
-        utenteBuilder.setEmail(email);
         utenteBuilder.setUsername(username);
+        utenteBuilder.setEmail(email);
         utenteBuilder.setPassword(passwordCriptata);
         utenteBuilder.setRuolo(ruolo);
 

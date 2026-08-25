@@ -8,14 +8,14 @@ public class ConcreteUtenteBuilder implements UtenteBuilder{
     }
 
     @Override
-    public void setEmail(String email){ utente.setEmail(email); }
+    public void setEmail(String email){ this.utente.setEmail(email); }
 
     @Override
-    public void setUsername(String username) { utente.setUsername(username); }
+    public void setUsername(String username) { this.utente.setUsername(username); }
 
     @Override
     public void setPassword(String password) {
-        utente.setPassword(password);
+        this.utente.setPassword(password);
     }
 
     @Override
@@ -29,11 +29,11 @@ public class ConcreteUtenteBuilder implements UtenteBuilder{
 
     @Override
     public Utente getUtente() {
-        return utente;
+        return this.utente;
     }
 
     @Override
     public void resetUtente() {
-        utente= new Utente();
+        this.utente= new Utente();
     }
 }

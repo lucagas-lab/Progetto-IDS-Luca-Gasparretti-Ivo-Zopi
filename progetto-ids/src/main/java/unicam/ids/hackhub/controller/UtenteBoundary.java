@@ -62,7 +62,7 @@ public class UtenteBoundary {
     @PostMapping("/login")
     public ResponseEntity<String> effettuaLogin(@RequestBody LoginRequest request){
         try{
-            // Il gestore ci restituisce il VERO token JWT
+            // Il gestore ci restituisce il VERO  JWT
             String token = gestoreLogin.effettuaLogin(request.getUsername(), request.getPassword());
             return new ResponseEntity<>(token, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
