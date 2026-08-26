@@ -3,7 +3,7 @@
 -- ==========================================
 INSERT INTO team (nome_team) VALUES ('Byte Force');
 INSERT INTO team (nome_team) VALUES ('Algoritmo Ribelle');
-INSERT INTO team (nome_team) VALUES ('Null Pointers'); -- Team vuoto per testare gli inviti
+INSERT INTO team (nome_team) VALUES ('Null Pointers');
 
 -- ==========================================
 -- 2. UTENTI CON TEAM
@@ -22,6 +22,7 @@ VALUES ('anna_verdi', 'anna@example.com', '$2a$10$kypbnGGCpJ7UQlysnqzJG.6H.dUewn
 
 -- ==========================================
 -- 3. UTENTI SENZA TEAM
+-- (Password per tutti: password123)
 -- ==========================================
 INSERT INTO utente (username, email, password, ruolo)
 VALUES ('giulia_gialli', 'giulia@example.com', '$2a$10$kypbnGGCpJ7UQlysnqzJG.6H.dUewn7UPVWA3Ip.E.8U4jlVnFNnu', 'UTENTE');
@@ -31,6 +32,7 @@ VALUES ('paolo_blu', 'paolo@example.com', '$2a$10$kypbnGGCpJ7UQlysnqzJG.6H.dUewn
 
 -- ==========================================
 -- 4. STAFF HACKATHON (Organizzatori, Giudici, Mentori)
+-- (Password per tutti: password123)
 -- ==========================================
 INSERT INTO utente (username, email, password, ruolo)
 VALUES ('organizzatore', 'admin@hackhub.it', '$2a$10$kypbnGGCpJ7UQlysnqzJG.6H.dUewn7UPVWA3Ip.E.8U4jlVnFNnu', 'ORGANIZZATORE');
