@@ -37,9 +37,8 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/utenti/login").permitAll()
                         .requestMatchers("/utenti/registra").permitAll()
-                        .requestMatchers("/hackathon/elenco").permitAll()
+                        .requestMatchers("/hackathon/elencoHackathon").permitAll()
                         .requestMatchers("/hackathon/visualizzaRegolamento/**").permitAll()
-                        .requestMatchers("/team/elenco").permitAll()
                         .requestMatchers("/error").permitAll()
 
                         // Rotte per OpenAPI / Swagger e Postman
