@@ -134,14 +134,14 @@ public class HackathonBoundary {
     }
 
     @PreAuthorize("hasAuthority('ORGANIZZATORE')")
-    @PutMapping("/{nomeHackathon}/mentori")
+    @PutMapping("/{idHackathon}/assegnaMentori/{idMentore}")
     public ResponseEntity<Object> assegnaMentore(
-            @PathVariable Authentication authentication,
-            @PathVariable String nomeHackathon,
-            @PathVariable String usernameMentore
+            Authentication authentication,
+            @PathVariable("idHackathon") Long idHackathon,
+            @PathVariable("idMentore") Long idMentore
     ) {
         try {
-            gestoreHackathon.assegnaMentore(authentication, nomeHackathon, usernameMentore);
+            gestoreHackathon.assegnaMentore(authentication, idHackathon, idMentore);
             return new ResponseEntity<>("Mentore assegnato con successo!", HttpStatus.OK);
 
         } catch (Exception e) {
@@ -150,14 +150,14 @@ public class HackathonBoundary {
     }
 
     @PreAuthorize("hasAuthority('ORGANIZZATORE')")
-    @DeleteMapping("/{nomeHackathon}/mentori/{username}")
+    @DeleteMapping("/{idHackathon}/mentori/{idMentore}")
     public ResponseEntity<String> rimuoviMentore(
-            @PathVariable Authentication authentication,
-            @PathVariable String nomeHackathon,
-            @PathVariable String usernameMentore
+            Authentication authentication, // <-- Rimosso @PathVariable
+            @PathVariable("idHackathon") Long idHackathon, // <-- Passato a Long
+            @PathVariable("idMentore") Long idMentore      // <-- Passato a Long
     ) {
         try {
-            gestoreHackathon.rimuoviMentore(authentication, nomeHackathon, usernameMentore);
+            gestoreHackathon.rimuoviMentore(authentication, idHackathon, idMentore);
             return ResponseEntity.ok("Mentore rimosso con successo");
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
