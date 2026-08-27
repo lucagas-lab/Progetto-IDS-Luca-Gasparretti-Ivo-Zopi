@@ -33,6 +33,7 @@ public class TeamBoundary {
         }
     }
 
+    @PreAuthorize("hasAuthority('UTENTE')")
     @GetMapping("/seleziona/{id}")
     public ResponseEntity<Object> selezionaHackathon(@PathVariable("id") Long idTeam) throws  Exception {
         try {
@@ -43,6 +44,7 @@ public class TeamBoundary {
         }
     }
 
+    @PreAuthorize("hasAuthority('UTENTE')")
     @GetMapping("/{id}/visualizza")
     public ResponseEntity<Object> visualizzaTeam(@PathVariable("id") Long idTeam) {
         try {
