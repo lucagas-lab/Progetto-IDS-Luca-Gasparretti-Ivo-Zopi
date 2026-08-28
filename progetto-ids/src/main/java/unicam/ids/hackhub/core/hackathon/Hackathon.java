@@ -92,7 +92,7 @@ public class Hackathon{
 
     public StatoHackathon getStato() { return this.stato; }
 
-    void setStato(StatoHackathon stato) {this.stato = stato;}
+    public void setStato(StatoHackathon stato) {this.stato = stato;}
 
     public void cambiaStato() {this.stato.cambiaStato(this);}
 
@@ -100,7 +100,7 @@ public class Hackathon{
         return dataInizioStato;
     }
 
-    void setDataInizio(LocalDateTime dataInizioStato) { this.dataInizioStato= dataInizioStato; }
+    public void setDataInizio(LocalDateTime dataInizioStato) { this.dataInizioStato= dataInizioStato; }
 
     public Double getPremio() {
         return premio;

@@ -238,6 +238,40 @@ public class GestoreHackathon {
         hackathonRep.save(hackathon);
     }
 
+
+    public void modificaStato(Authentication authentication, Long idHackathon, String nuovoStatoTarget) {
+
+        Hackathon hackathon = hackathonRep.findById(idHackathon)
+                .orElseThrow(() -> new IllegalArgumentException("Hackathon non trovato"));
+
+        if (!hackathon.getOrganizzatore().getUsername().equals(authentication.getName())) {
+            throw new IllegalStateException("Non sei l'organizzatore di questo evento.");
+        }
+
+        String statoAttuale = hackathon.getStato().getNomeStato();
+
+        if (statoAttuale.equals("TERMINATO")) {
+            throw new IllegalStateException("L'Hackathon è già terminato, non puoi più cambiare lo stato.");
+        }
+
+        switch (nuovoStatoTarget.toUpperCase()) {
+            case "IN_CORSO":
+                hackathon.setStato(new StatoInCorso());
+                break;
+            case "IN_VALUTAZIONE":
+                hackathon.setStato(new StatoInValutazione());
+                break;
+            case "TERMINATO":
+                hackathon.setStato(new StatoConcluso());
+                break;
+            default:
+                throw new IllegalArgumentException("Stato non riconosciuto o transizione non permessa.");
+        }
+
+        hackathonRep.save(hackathon);
+    }
+
+
     private HackathonDTO convertiDTO(Hackathon hackathon) {
 
         String dataInizioStr = (hackathon.getDataInizio() != null)

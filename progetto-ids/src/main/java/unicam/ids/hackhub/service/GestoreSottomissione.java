@@ -27,18 +27,15 @@ public class GestoreSottomissione {
     private final TeamRepository teamRep;
     private final HackathonRepository hackathonRep;
     private final UtenteRepository utenteRep;
-    private final ValutazioneRepository valutazioneRep;
 
     public GestoreSottomissione(SottomissioneRepository sottomissioneRep,
                                 TeamRepository teamRep,
                                 HackathonRepository hackathonRep,
-                                UtenteRepository utenteRep,
-                                ValutazioneRepository valutazioneRep){
+                                UtenteRepository utenteRep){
         this.sottomissioneRep = sottomissioneRep;
         this.teamRep = teamRep;
         this.hackathonRep = hackathonRep;
         this.utenteRep = utenteRep;
-        this.valutazioneRep = valutazioneRep;
     }
 
 
@@ -68,35 +65,15 @@ public class GestoreSottomissione {
     }
 
     public SottomissioneDTO selezionaSottomissione(Long idSottomissione) throws Exception{
-        //Recupero la sottomissione dal database
         Sottomissione sottomissione= sottomissioneRep.findById(idSottomissione)
                 .orElseThrow(() -> new Exception("Errore: Nessuna sottomissione trovata con ID: " + idSottomissione));
        return convertiDTO(sottomissione);
     }
 
-    public void valutaSottomissione(ValutaSottomissioneDTO valutaDTO) throws Exception{
-        Sottomissione sottomissione = sottomissioneRep.findById(valutaDTO.getIdSottomissione())
-                .orElseThrow(() -> new Exception("Errore: Nessuna sottomissione trovata con ID: " + valutaDTO.getIdSottomissione()));
-
-        Hackathon hackathon = sottomissione.getTeam().getHackathon();
-
-        hackathon.getStato().verificaPossibilitaValutazione();
-
-        Valutazione nuovaValutazione = new Valutazione();
-        nuovaValutazione.setVoto(valutaDTO.getVoto());
-
-        nuovaValutazione = valutazioneRep.save(nuovaValutazione);
-
-        sottomissione.setValutazione(nuovaValutazione);
-        sottomissioneRep.save(sottomissione);
-    }
-
     public void aggiornaSottomissione(Long idSottomissione, String nuovaDescrizione, String nuovoLink) throws Exception{
-        // Cerco la sottomissione nel database
         Sottomissione sottomissione = sottomissioneRep.findById(idSottomissione)
                 .orElseThrow(() -> new Exception("Errore: Sottomissione non trovata con ID " + idSottomissione));
 
-        // Aggiorno i campi solo se non sono vuoti o nulli
         if (nuovaDescrizione != null && !nuovaDescrizione.trim().isEmpty()) {
             sottomissione.setDescrizione(nuovaDescrizione);
         }

@@ -1,34 +1,65 @@
 package unicam.ids.hackhub.core.sottomissioni;
 
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
-import unicam.ids.hackhub.core.team.Team;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Valutazione {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long valutazioneId;
+
     private Double voto;
+
     private String descrizione;
 
-    public Valutazione(){}
+    @OneToOne
+    @JoinColumn(name = "sottomissione_id")
+    private Sottomissione sottomissione;
 
-    public Valutazione(Double voto, String descrizione){
-        this.voto= voto;
-        this.descrizione=descrizione;
+    public Valutazione() {
     }
 
-    public Long getValutazioneId(){ return valutazioneId; }
+    public Valutazione(Double voto, String descrizione, Sottomissione sottomissione) {
+        this.voto = voto;
+        this.descrizione = descrizione;
+        this.sottomissione = sottomissione;
+    }
 
-    public Double getVoto(){ return voto;}
+    public Long getValutazioneId() {
+        return valutazioneId;
+    }
 
-    public void setVoto(Double voto){ this.voto=voto; }
+    public void setValutazioneId(Long valutazioneId) {
+        this.valutazioneId = valutazioneId;
+    }
 
-    public String getDescrizione(){ return descrizione; }
+    public Double getVoto() {
+        return voto;
+    }
 
-    public void setDescrizione(String descrizione){ this.descrizione=descrizione; }
+    public void setVoto(Double voto) {
+        this.voto = voto;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public Sottomissione getSottomissione() {
+        return sottomissione;
+    }
+
+    public void setSottomissione(Sottomissione sottomissione) {
+        this.sottomissione = sottomissione;
+    }
 }

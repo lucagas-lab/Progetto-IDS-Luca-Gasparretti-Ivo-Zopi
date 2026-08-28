@@ -163,4 +163,19 @@ public class HackathonBoundary {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PreAuthorize("hasAuthority('ORGANIZZATORE')")
+    @PutMapping("/{id}/stato")
+    public ResponseEntity<String> modificaStatoHackathon(
+            Authentication authentication,
+            @PathVariable("id") Long idHackathon,
+            @RequestParam String nuovoStato) {
+
+        try {
+            gestoreHackathon.modificaStato(authentication, idHackathon, nuovoStato);
+            return ResponseEntity.ok("Stato dell'Hackathon aggiornato a: " + nuovoStato);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

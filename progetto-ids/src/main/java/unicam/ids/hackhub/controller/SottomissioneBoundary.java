@@ -26,6 +26,7 @@ public class SottomissioneBoundary {
         this.gestoreSottomissione = gestoreSottomissione;
     }
 
+    @PreAuthorize("hasAuthority('UTENTE')")
     @PostMapping("/crea")
     public ResponseEntity<Object> creaSottomissione(@RequestBody CreaSottomissioneDTO creaDTO){
         try{
@@ -36,6 +37,7 @@ public class SottomissioneBoundary {
         }
     }
 
+    @PreAuthorize("hasAnyAuthority('UTENTE', 'ORGANIZZATORE', 'MENTORE')")
     @GetMapping("/seleziona/{id}")
     public ResponseEntity<Object> selezionaSottomissione(@PathVariable Long idSottomissione){
         try{
@@ -46,6 +48,7 @@ public class SottomissioneBoundary {
         }
     }
 
+    @PreAuthorize("hasAuthority('UTENTE')")
     @PutMapping("/{id}/aggiorna")
     public ResponseEntity<Object> aggiornaSottomissione( @PathVariable("id") Long idSottomissione, @RequestBody AggiornaSottomissioneDTO dto) {
 
@@ -62,6 +65,7 @@ public class SottomissioneBoundary {
         }
     }
 
+    @PreAuthorize("hasAnyAuthority('UTENTE', 'ORGANIZZATORE', 'MENTORE')")
     @GetMapping("/{id}/scarica")
     public ResponseEntity<Object> scaricaSottomissione(@PathVariable("id") Long idSottomissione) {
         try {
