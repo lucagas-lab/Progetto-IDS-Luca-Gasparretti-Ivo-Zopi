@@ -41,7 +41,6 @@ public class SecurityConfig {
                         .requestMatchers("/hackathon/visualizzaRegolamento/**").permitAll()
                         .requestMatchers("/error").permitAll()
 
-                        // Rotte per OpenAPI / Swagger e Postman
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 
                         .anyRequest().authenticated()
@@ -54,19 +53,11 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * Il codificatore di password (serve sia per registrare che per fare login)
-     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    /**
-     * Il manager che useremo nell'UtenteController.
-     * Dato che Spring fa l'auto-configurazione, capirà da solo di dover usare il BCrypt
-     * e la nostra classe CustomUserDetailsService per far funzionare questo manager!
-     */
+    
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
