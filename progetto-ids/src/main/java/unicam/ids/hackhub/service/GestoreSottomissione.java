@@ -44,18 +44,15 @@ public class GestoreSottomissione {
         Team t = teamRep.findByUtentiUsername(creaDTO.getUsernameAutore())
                 .orElseThrow(() -> new Exception("Errore: Devi fare parte di un team"));
 
-        // Controllo se il team ha già inviato qualcosa
         if (sottomissioneRep.existsByTeam(t)) {
             throw new Exception("Errore: Sottomissione già esistente per questo team");
         }
 
-        // Verifico l'hackathon
         Hackathon h = t.getHackathon();
         if (h == null) {
             throw new Exception("Errore: Hackathon non trovato");
         }
 
-        // delego allo stato il controllo. Se non si può sottomettere, allo viene lanciata l'eccezione
         h.getStato().verificaPossibilitaSottomissione();
 
         Sottomissione sottomissione = new Sottomissione(t, creaDTO.getNome(), creaDTO.getLinkRepository(), creaDTO.getDescrizione());
