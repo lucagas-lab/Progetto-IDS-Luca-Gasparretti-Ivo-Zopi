@@ -22,17 +22,15 @@ public class Richiesta {
     @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 
-    @Enumerated(EnumType.STRING) // Salva l'enum come stringa (es. "PENDENTE") nel DB, non come numero
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EsitoRichiesta statoRichiesta;
 
     @Column(nullable = false)
     private LocalDateTime dataRichiesta;
 
-    // 1. Costruttore vuoto obbligatorio per Spring/Hibernate
     public Richiesta() {}
 
-    // 2. Costruttore che useremo noi nel GestoreTeam
     public Richiesta(Utente utente, Team team) {
         this.utente = utente;
         this.team = team;
