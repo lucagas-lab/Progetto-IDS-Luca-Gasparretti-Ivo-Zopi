@@ -19,10 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public CustomUserDetailsService(UtenteRepository utenteRep) {
         this.utenteRep = utenteRep;
     }
-
-    /**
-     * Metodo chiamato in automatico durante la fase di login.
-     */
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Utente utente = utenteRep.findByUsername(username)
