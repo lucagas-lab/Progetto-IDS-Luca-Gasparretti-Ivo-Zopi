@@ -18,7 +18,7 @@ public class Supporto {
     private String testoRichiesta;
 
     @Column(nullable = false)
-    private String stato; // es. "APERTA", "RISOLTA"
+    private String stato;
 
     public Supporto() {}
 
