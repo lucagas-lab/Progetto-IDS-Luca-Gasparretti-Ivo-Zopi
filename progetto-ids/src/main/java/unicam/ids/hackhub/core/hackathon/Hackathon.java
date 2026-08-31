@@ -33,7 +33,7 @@ public class Hackathon{
     private Double premio;
 
     @Column(nullable = false)
-    private int dimenisoneTeam; // Mantengo il refuso "dimenisone" come da diagramma
+    private int dimenisoneTeam;
 
     @Column(nullable = false)
     private String regolamento;
@@ -44,9 +44,9 @@ public class Hackathon{
 
     @ManyToMany
     @JoinTable(
-            name = "hackathon_mentori", // Nome della tabella intermedia che creerà il DB
-            joinColumns = @JoinColumn(name = "hackathon_id"), // Colonna verso l'Hackathon
-            inverseJoinColumns = @JoinColumn(name = "mentore_id") // Colonna verso l'Utente (Mentore)
+            name = "hackathon_mentori",
+            joinColumns = @JoinColumn(name = "hackathon_id"),
+            inverseJoinColumns = @JoinColumn(name = "mentore_id")
     )
     private List<Utente> mentori;
 
@@ -125,15 +125,19 @@ public class Hackathon{
     public List<Utente> getMentori() {
         return mentori;
     }
+
     public void addMentore(Utente mentore) { this.mentori.add(mentore);}
+
     public void removeMentore(Utente mentore) {this.mentori.remove(mentore);}
 
     public Utente getGiudice() { return giudice; }
+
     void setGiudice(Utente giudice) { this.giudice= giudice; }
 
     public List<Team> getTeamPartecipanti() { return teamPartecipanti; }
 
     public void addTeam(Team team) { this.teamPartecipanti.add(team); }
+
     public void removeTeam(Team team) {
         if (team != null) {
             this.teamPartecipanti.remove(team);
@@ -142,9 +146,7 @@ public class Hackathon{
 
     public boolean sottomissioniValutate() {
         return this.teamPartecipanti.stream()
-                // si filtrano solo i team che hanno effettivamente caricato una sottomissione
                 .filter(team -> team.getSottomissione() != null)
-                // si verifica che tutte queste sottomissioni abbiano una valutazione non nulla
                 .allMatch(team -> team.getSottomissione().getValutazione() != null);
     }
 }
