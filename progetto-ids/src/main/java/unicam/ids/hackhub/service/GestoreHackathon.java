@@ -238,8 +238,7 @@ public class GestoreHackathon {
         hackathonRep.save(hackathon);
     }
 
-
-    public void modificaStato(Authentication authentication, Long idHackathon, String nuovoStatoTarget) {
+    public void cambiaStato(Authentication authentication, Long idHackathon, String nuovoStatoTarget) {
 
         Hackathon hackathon = hackathonRep.findById(idHackathon)
                 .orElseThrow(() -> new IllegalArgumentException("Hackathon non trovato"));
@@ -248,32 +247,43 @@ public class GestoreHackathon {
             throw new IllegalStateException("Non sei l'organizzatore di questo evento.");
         }
 
-        String statoAttuale = hackathon.getStato().getNomeStato();
+        String statoAttuale = hackathon.getStato().getNomeStato().toUpperCase();
+        String target = nuovoStatoTarget.toUpperCase();
 
-        if (statoAttuale.equals("TERMINATO")) {
-            throw new IllegalStateException("L'Hackathon è già terminato, non puoi più cambiare lo stato.");
+        if (statoAttuale.equals("CONCLUSO")) {
+            throw new IllegalStateException("L'Hackathon è già concluso, non puoi più cambiare stato.");
+        }
+        
+        if (statoAttuale.equals("IN ISCRIZIONE") && !target.equals("IN_CORSO")) {
+            throw new IllegalStateException("Errore: Da IN_ISCRIZIONE puoi passare solo a IN_CORSO.");
         }
 
-        switch (nuovoStatoTarget.toUpperCase()) {
+        if (statoAttuale.equals("IN CORSO") && !target.equals("IN_VALUTAZIONE")) {
+            throw new IllegalStateException("Errore: Da IN CORSO puoi passare solo a IN_VALUTAZIONE. Non puoi saltare i giudici.");
+        }
+
+        if (statoAttuale.equals("IN VALUTAZIONE") && !target.equals("CONCLUSO")) {
+            throw new IllegalStateException("Errore: Da IN VALUTAZIONE puoi passare solo a CONCLUSO.");
+        }
+
+        switch (target) {
             case "IN_CORSO":
                 hackathon.setStato(new StatoInCorso());
                 break;
             case "IN_VALUTAZIONE":
                 hackathon.setStato(new StatoInValutazione());
                 break;
-            case "TERMINATO":
+            case "CONCLUSO":
                 hackathon.setStato(new StatoConcluso());
                 break;
             default:
-                throw new IllegalArgumentException("Stato non riconosciuto o transizione non permessa.");
+                throw new IllegalArgumentException("Stato target non riconosciuto.");
         }
 
         hackathonRep.save(hackathon);
     }
 
-
     private HackathonDTO convertiDTO(Hackathon hackathon) {
-
         String dataInizioStr = (hackathon.getDataInizio() != null)
                 ? hackathon.getDataInizio().toString()
                 : "Data non definita";

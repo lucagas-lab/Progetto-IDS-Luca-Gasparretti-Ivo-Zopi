@@ -166,13 +166,13 @@ public class HackathonBoundary {
 
     @PreAuthorize("hasAuthority('ORGANIZZATORE')")
     @PutMapping("/{id}/stato")
-    public ResponseEntity<String> modificaStatoHackathon(
+    public ResponseEntity<String> cambioStatoHackathon(
             Authentication authentication,
             @PathVariable("id") Long idHackathon,
             @RequestParam String nuovoStato) {
 
         try {
-            gestoreHackathon.modificaStato(authentication, idHackathon, nuovoStato);
+            gestoreHackathon.cambiaStato(authentication, idHackathon, nuovoStato);
             return ResponseEntity.ok("Stato dell'Hackathon aggiornato a: " + nuovoStato);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

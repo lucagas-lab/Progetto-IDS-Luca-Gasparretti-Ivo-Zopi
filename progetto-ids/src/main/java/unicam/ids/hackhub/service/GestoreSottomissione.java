@@ -14,6 +14,7 @@ import unicam.ids.hackhub.core.team.Team;
 import unicam.ids.hackhub.core.hackathon.StatoHackathon;
 import unicam.ids.hackhub.core.utenti.Ruolo;
 import unicam.ids.hackhub.core.utenti.Utente;
+import org.springframework.security.core.Authentication;
 import unicam.ids.hackhub.infrastructure.*;
 
 import java.io.IOException;
@@ -85,14 +86,26 @@ public class GestoreSottomissione {
     }
 
 
-    public String scaricaSottomissione(Long idSottomissione) throws Exception{
-        //Cerco la sottomissione
+    public String scaricaSottomissione(Authentication authentication, Long idSottomissione) throws Exception {
+
         Sottomissione sottomissione = sottomissioneRep.findById(idSottomissione)
                 .orElseThrow(() -> new Exception("Errore: Sottomissione non trovata con ID " + idSottomissione));
 
-        //Restituisco il link della repository
-        return "Repository del team: " + sottomissione.getLinkRepository() +
-                "\nDescrizione: " + sottomissione.getDescrizione();
+        String usernameLoggato = authentication.getName();
+
+        boolean isUtenteSemplice = authentication.getAuthorities().stream()
+                .anyMatch(ruolo -> ruolo.getAuthority().equals("UTENTE"));
+
+        if (isUtenteSemplice) {
+            Team teamDellUtente = teamRep.findByUtentiUsername(usernameLoggato)
+                    .orElseThrow(() -> new Exception("Errore: Non fai parte di nessun team."));
+
+            if (!teamDellUtente.getTeamId().equals(sottomissione.getTeam().getTeamId())) {
+                throw new Exception("Accesso Negato: Non puoi spiare il codice di un team avversario!");
+            }
+        }
+
+        return "Repository del team: " + sottomissione.getLinkRepository() + "\nDescrizione: " + sottomissione.getDescrizione();
     }
 
     private SottomissioneDTO convertiDTO(Sottomissione sottomissione) {

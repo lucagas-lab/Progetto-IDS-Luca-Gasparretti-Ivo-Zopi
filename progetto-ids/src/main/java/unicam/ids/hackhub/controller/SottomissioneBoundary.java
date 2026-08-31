@@ -39,7 +39,7 @@ public class SottomissioneBoundary {
 
     @PreAuthorize("hasAnyAuthority('UTENTE', 'ORGANIZZATORE', 'MENTORE')")
     @GetMapping("/seleziona/{id}")
-    public ResponseEntity<Object> selezionaSottomissione(@PathVariable Long idSottomissione){
+    public ResponseEntity<Object> selezionaSottomissione(@PathVariable("id") Long idSottomissione){
         try{
             SottomissioneDTO sottomissioneDTO = gestoreSottomissione.selezionaSottomissione(idSottomissione);
             return new ResponseEntity<>(sottomissioneDTO, HttpStatus.OK);
@@ -65,15 +65,17 @@ public class SottomissioneBoundary {
         }
     }
 
-    @PreAuthorize("hasAnyAuthority('UTENTE', 'ORGANIZZATORE', 'MENTORE')")
+    @PreAuthorize("hasAnyAuthority('UTENTE', 'ORGANIZZATORE', 'MENTORE', 'GIUDICE')")
     @GetMapping("/{id}/scarica")
-    public ResponseEntity<Object> scaricaSottomissione(@PathVariable("id") Long idSottomissione) {
+    public ResponseEntity<Object> scaricaSottomissione(
+            Authentication authentication,
+            @PathVariable("id") Long idSottomissione) {
         try {
-            String dettagliSottomissione = gestoreSottomissione.scaricaSottomissione(idSottomissione);
+            String dettagliSottomissione = gestoreSottomissione.scaricaSottomissione(authentication, idSottomissione);
             return new ResponseEntity<>(dettagliSottomissione, HttpStatus.OK);
 
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
         }
     }
 }
