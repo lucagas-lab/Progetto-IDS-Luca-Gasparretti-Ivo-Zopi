@@ -56,23 +56,18 @@ public class GestoreSegnalazione {
     public List<SegnalazioneDTO> visualizzaSegnalazione(String username) {
         Utente utente = utenteRep.findByUsername(username).orElse(null);
 
-        // Primo blocco 'break': controlla se l'utente esiste ed è un ORGANIZZATORE
         if (utente == null || utente.getRuolo() != Ruolo.ORGANIZZATORE) {
             throw new IllegalArgumentException("errore");
         }
 
-        // 2. Recupera gli hackathon gestiti dall'organizzatore
         List<Hackathon> hackathons = hackathonRep.findByOrganizzatore(utente);
 
-        // Secondo blocco 'break': controlla se la lista di hackathon è vuota
         if (hackathons.isEmpty()) {
             throw new IllegalStateException("Non gestisce hackathon");
         }
 
-        // 3. Recupera le segnalazioni associate agli hackathon trovati
         List<Segnalazione> segnalazioni = segnalazioneRep.findByTeamSospettato_HackathonIn(hackathons);
 
-        // 4. Converte le entità Segnalazione in SegnalazioneDTO e restituisce la lista
         return segnalazioni.stream()
                 .map(s -> new SegnalazioneDTO(
                         s.getIdSegnalazione(),

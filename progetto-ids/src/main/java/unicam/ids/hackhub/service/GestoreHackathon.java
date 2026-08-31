@@ -141,7 +141,6 @@ public class GestoreHackathon {
                 .collect(Collectors.toList());
     }
 
-    //METODO PER VISUALIZZARE UN SINGOLO HACKATHON
     public HackathonDTO visualizzaHackathon(Long idHackathon) throws Exception {
         Hackathon hackathon = hackathonRep.findById(idHackathon)
                 .orElseThrow(() -> new Exception("Errore: Hackathon non trovato con ID " + idHackathon));
@@ -149,7 +148,6 @@ public class GestoreHackathon {
         return convertiDTO(hackathon);
     }
 
-    // METODO PER MODIFICARE UN HACKATHON
     public void modificaHackathon(Long idHackathon, Double nuovoPremio, Integer nuovaDimensione, String nuovoRegolamento) throws Exception {
         Hackathon hackathon = hackathonRep.findById(idHackathon)
                 .orElseThrow(() -> new Exception("Errore: Hackathon non trovato con ID " + idHackathon));
@@ -168,7 +166,6 @@ public class GestoreHackathon {
         hackathonRep.save(hackathon);
     }
 
-    //METODO PER ELIMINARE UN HACKATHON
     public void eliminaHackathon(Long idHackathon) throws Exception {
         if (!hackathonRep.existsById(idHackathon)) {
             throw new Exception("Errore: Impossibile eliminare. Nessun Hackathon trovato con ID " + idHackathon);
