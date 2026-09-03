@@ -39,6 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/utenti/registra").permitAll()
                         .requestMatchers("/hackathon/elencoHackathon").permitAll()
                         .requestMatchers("/hackathon/visualizzaRegolamento/**").permitAll()
+                        .requestMatchers("/hackathon/*/visualizzaHackathon").permitAll()
                         .requestMatchers("/error").permitAll()
 
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()

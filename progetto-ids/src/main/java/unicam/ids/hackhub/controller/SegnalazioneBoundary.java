@@ -39,7 +39,7 @@ public class SegnalazioneBoundary {
         }
     }
 
-    @PreAuthorize("hasAuthority('MENTORE')")
+    @PreAuthorize("hasAnyAuthority('MENTORE', 'UTENTE', 'ORGANIZZATORE', 'GIUDICE')")
     @GetMapping("/segnalazione")
     public ResponseEntity<Object> visualizzaSegnalazione(Authentication authentication) {
 

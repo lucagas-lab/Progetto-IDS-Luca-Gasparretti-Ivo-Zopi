@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import unicam.ids.hackhub.core.hackathon.Hackathon;
 import unicam.ids.hackhub.core.segnalazioni.Segnalazione;
 import unicam.ids.hackhub.core.team.Team;
+import unicam.ids.hackhub.core.utenti.Utente; // <-- IMPORTANTE: Aggiunto import per Utente
 
 import java.util.List;
 
@@ -15,4 +16,8 @@ public interface SegnalazioneRepository extends JpaRepository<Segnalazione, Long
     List<Segnalazione> findByTeamSospettato_Hackathon_IdHackathon(Long idHackathon);
 
     List<Segnalazione> findByTeamSospettato_HackathonIn(List<Hackathon> hackathons);
+
+    List<Segnalazione> findByMentore(Utente mentore);
+
+    List<Segnalazione> findByTeamSospettato(Team team);
 }

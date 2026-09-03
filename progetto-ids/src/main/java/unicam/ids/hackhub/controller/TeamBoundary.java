@@ -44,7 +44,7 @@ public class TeamBoundary {
         }
     }
 
-    @PreAuthorize("hasAuthority('UTENTE')")
+    @PreAuthorize("hasAnyAuthority('UTENTE', 'ORGANIZZATORE', 'MENTORE', 'GIUDICE')")
     @GetMapping("/{id}/visualizza")
     public ResponseEntity<Object> visualizzaTeam(@PathVariable("id") Long idTeam) {
         try {

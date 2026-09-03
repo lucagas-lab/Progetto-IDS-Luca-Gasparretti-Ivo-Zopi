@@ -25,6 +25,8 @@ public interface HackathonRepository extends JpaRepository<Hackathon, Long>{
 
     List<Hackathon> findByOrganizzatore(Utente organizzatore);
 
+    List<Hackathon> findByGiudice(Utente giudice);
+
     Optional<Hackathon> findByNomeHackathonAndStato(String nomeHackathon, StatoHackathon statoHackathon);
 
     Optional<Hackathon> findByMentoriContaining(Utente mentore);

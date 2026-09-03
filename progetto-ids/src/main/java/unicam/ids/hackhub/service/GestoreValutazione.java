@@ -34,7 +34,8 @@ public class GestoreValutazione {
         }
 
         Valutazione nuovaValutazione = new Valutazione(voto, descrizione, sottomissione);
-
         valutazioneRep.save(nuovaValutazione);
+        sottomissione.setValutazione(nuovaValutazione);
+        sottomissioneRep.save(sottomissione);
     }
 }

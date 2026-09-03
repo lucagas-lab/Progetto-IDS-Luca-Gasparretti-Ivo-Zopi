@@ -54,19 +54,33 @@ public class GestoreSegnalazione {
 
 
     public List<SegnalazioneDTO> visualizzaSegnalazione(String username) {
-        Utente utente = utenteRep.findByUsername(username).orElse(null);
+        Utente utente = utenteRep.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Utente non trovato"));
 
-        if (utente == null || utente.getRuolo() != Ruolo.ORGANIZZATORE) {
-            throw new IllegalArgumentException("errore");
+        List<Segnalazione> segnalazioni;
+
+        switch (utente.getRuolo()) {
+            case ORGANIZZATORE:
+                List<Hackathon> hackathonsOrg = hackathonRep.findByOrganizzatore(utente);
+                segnalazioni = segnalazioneRep.findByTeamSospettato_HackathonIn(hackathonsOrg);
+                break;
+            case MENTORE:
+                segnalazioni = segnalazioneRep.findByMentore(utente);
+                break;
+            case UTENTE:
+                if (utente.getTeam() != null) {
+                    segnalazioni = segnalazioneRep.findByTeamSospettato(utente.getTeam());
+                } else {
+                    segnalazioni = List.of();
+                }
+                break;
+            case GIUDICE:
+                List<Hackathon> hackathonsGiudice = hackathonRep.findByGiudice(utente);
+                segnalazioni = segnalazioneRep.findByTeamSospettato_HackathonIn(hackathonsGiudice);
+                break;
+            default:
+                throw new IllegalArgumentException("Ruolo non riconosciuto per la visualizzazione.");
         }
-
-        List<Hackathon> hackathons = hackathonRep.findByOrganizzatore(utente);
-
-        if (hackathons.isEmpty()) {
-            throw new IllegalStateException("Non gestisce hackathon");
-        }
-
-        List<Segnalazione> segnalazioni = segnalazioneRep.findByTeamSospettato_HackathonIn(hackathons);
 
         return segnalazioni.stream()
                 .map(s -> new SegnalazioneDTO(

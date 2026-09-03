@@ -1,0 +1,1373 @@
+{
+  "info": {
+    "_postman_id": "bddc68bb-166f-48ad-ae2d-9b0a49e7b4e5",
+    "name": "HackHub",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56814168",
+    "_collection_link": "https://go.postman.co/collection/56814168-bddc68bb-166f-48ad-ae2d-9b0a49e7b4e5?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Hackathon",
+      "item": [
+        {
+          "name": "creaHackathon",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "nomeHackathon",
+                  "value": "primoHackathon",
+                  "type": "text",
+                  "uuid": "38fdab18-504a-4011-9a24-8dd4d3de605b"
+                },
+                {
+                  "key": "premio",
+                  "value": "105",
+                  "type": "text",
+                  "uuid": "d6a1b041-6829-4d0f-8a1f-2803fd5b0792"
+                },
+                {
+                  "key": "dimensioneTeam",
+                  "value": "3",
+                  "type": "text",
+                  "uuid": "9eafc912-9d90-40b8-b785-46b6d813f346"
+                },
+                {
+                  "key": "regolamento",
+                  "value": "regolamento primoHackathon",
+                  "type": "text",
+                  "uuid": "f919a311-172b-4af6-8507-fa1111852140"
+                },
+                {
+                  "key": "giudice",
+                  "value": "giudice",
+                  "type": "text",
+                  "uuid": "3d37575f-65a8-4208-9da4-83676c5d96d2"
+                },
+                {
+                  "key": "mentori",
+                  "value": "mentore",
+                  "type": "text",
+                  "uuid": "e3a4f098-16d2-44b0-8d73-6e0e19170c44"
+                }
+              ]
+            },
+            "url": {
+              "raw": "localhost:8080/hackathon/crea",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hackathon",
+                "crea"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "selezionaHackathon",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/hackathon/seleziona/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hackathon",
+                "seleziona",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "elencoHackathon",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/hackathon/elencoHackathon",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hackathon",
+                "elencoHackathon"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "visualizzaRegolamento",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/hackathon/visualizzaRegolamento/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hackathon",
+                "visualizzaRegolamento",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "iscriviTeam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/hackathon/1/iscrivi/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hackathon",
+                "1",
+                "iscrivi",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "VisualizzaHackathon",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/hackathon/1/visualizzaHackathon",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hackathon",
+                "1",
+                "visualizzaHackathon"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "modificaHackathon",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"premio\": 250.50,\n    \"dimensioneTeam\": 3,\n    \"regolamento\": \"Nuovo regolamento primoHackathon\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/hackathon/1/modifica",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hackathon",
+                "1",
+                "modifica"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "eliminaHackathon",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/hackathon/1/elimina",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hackathon",
+                "1",
+                "elimina"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "assegnaMentore",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/hackathon/1/assegnaMentori/9",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hackathon",
+                "1",
+                "assegnaMentori",
+                "9"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "rimuoviMentore",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/hackathon/1/mentori/8",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hackathon",
+                "1",
+                "mentori",
+                "8"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cambioStato-InCorso",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/hackathon/1/stato?nuovoStato=IN_CORSO",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hackathon",
+                "1",
+                "stato"
+              ],
+              "query": [
+                {
+                  "key": "nuovoStato",
+                  "value": "IN_CORSO"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cambioStato-InValutazione",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/hackathon/1/stato?nuovoStato=IN_VALUTAZIONE",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hackathon",
+                "1",
+                "stato"
+              ],
+              "query": [
+                {
+                  "key": "nuovoStato",
+                  "value": "IN_VALUTAZIONE"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cambioStato-Concluso",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/hackathon/1/stato?nuovoStato=CONCLUSO",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "hackathon",
+                "1",
+                "stato"
+              ],
+              "query": [
+                {
+                  "key": "nuovoStato",
+                  "value": "CONCLUSO"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Autenticazione",
+      "item": [
+        {
+          "name": "loginUtente-luca_gaspa",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"luca_gaspa\",\n    \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/utenti/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "utenti",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "loginOrganizzatore",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"organizzatore\",\n    \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/utenti/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "utenti",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "registrazioneMentore",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"nuovo_mentore\",\n    \"email\": \"mentore.nuovo@hackhub.it\",\n    \"password\": \"password123\",\n    \"ruolo\": \"MENTORE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/utenti/registra",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "utenti",
+                "registra"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "registrazioneUtente",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"nuovo_utente\",\n    \"email\": \"utente.nuovo@example.it\",\n    \"password\": \"password123\",\n    \"ruolo\": \"UTENTE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/utenti/registra",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "utenti",
+                "registra"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "loginMentore",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"mentore\",\n    \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/utenti/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "utenti",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "loginGiudice",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"giudice\",\n    \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/utenti/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "utenti",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "loginUtente-ivo_zoppi",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"ivo_zoppi\",\n    \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/utenti/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "utenti",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "loginNuovoUtente",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"nuovo_utente\",\n    \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/utenti/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "utenti",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Utente",
+      "item": [
+        {
+          "name": "aggiornaProfilo",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"luca_gaspa_nuovo\",\n    \"email\": \"nuova.email@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/utenti/profilo",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "utenti",
+                "profilo"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Supporto",
+      "item": [
+        {
+          "name": "inviaRIchiestaSupporto",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"testoRichiesta\": \"Ciao, chiediamo supporto perchè il nostro team ha problemi con l'ambiente di test fornito per l'hackathon. \"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/supporto/invia",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supporto",
+                "invia"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "visualizzaRIchiestaSupporto",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/supporto/hackathon/1/visualizza",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supporto",
+                "hackathon",
+                "1",
+                "visualizza"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Richiesta",
+      "item": [
+        {
+          "name": "getRichiestePendenti",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/richieste/team/1/pendenti",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "richieste",
+                "team",
+                "1",
+                "pendenti"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "richiediAccessoAlTeam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/richieste/1/richiedi-accesso",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "richieste",
+                "1",
+                "richiedi-accesso"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "accettaRichiestaAccessoUtente",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/richieste/1/accetta",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "richieste",
+                "1",
+                "accetta"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Segnalazione",
+      "item": [
+        {
+          "name": "segnalaViolazione",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"idTeamSospettato\": 1,\r\n  \"descrizioneViolazione\": \"Utilizzo di codice non autorizzato durante la sessione.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/segnalazione/invia",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "segnalazione",
+                "invia"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "visualizzaSegnalazione",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "[\r\n  {\r\n    \"idTeamSospettato\": 1,\r\n    \"descrizioneViolazione\": \"Utilizzo di codice non autorizzato.\"\r\n  }\r\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/segnalazione/segnalazione",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "segnalazione",
+                "segnalazione"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Team",
+      "item": [
+        {
+          "name": "eliminaTeam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": 123\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/team/123/elimina",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "team",
+                "123",
+                "elimina"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "visualizzaTeam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/team/1/visualizza",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "team",
+                "1",
+                "visualizza"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "selezionaTeam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/team/seleziona/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "team",
+                "seleziona",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "modificaTeam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nuovoNomeTeam\": \"Nuovo Nome Team\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/team/1/modifica",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "team",
+                "1",
+                "modifica"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "abbandonaTeam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/team/1/abbandona",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "team",
+                "1",
+                "abbandona"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "creaTeam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "Team",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/team/crea",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "team",
+                "crea"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sottomissione",
+      "item": [
+        {
+          "name": "creaSottomissione",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nome\": \"primoHackathon\",\n    \"linkRepository\": \"https://github.com/tuo-team/hackhub-finale\",\n    \"descrizione\": \"Abbiamo completato il backend in Spring Boot e il frontend in Angular per il progetto HackHub.\",\n    \"usernameAutore\": \"luca_gaspa\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/sottomissioni/crea",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "sottomissioni",
+                "crea"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "selezionaSottomissione",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/sottomissioni/seleziona/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "sottomissioni",
+                "seleziona",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "aggiornaSottomissione",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nuovaDescrizione\": \"Nuova descrizione\",\n    \"nuovoLinkRepository\": \"https://github.com/tuo-team/hackhub-versione-finale\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/sottomissioni/1/aggiorna",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "sottomissioni",
+                "1",
+                "aggiorna"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "scaricaSottomissione",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/sottomissioni/1/scarica",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "sottomissioni",
+                "1",
+                "scarica"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Valutazione",
+      "item": [
+        {
+          "name": "valutaSottomissione",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"idSottomissione\": 1,\n    \"voto\": 28.5,\n    \"descrizione\": \"Descriziona valutazione\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/valutazioni/valuta",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "valutazioni",
+                "valuta"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

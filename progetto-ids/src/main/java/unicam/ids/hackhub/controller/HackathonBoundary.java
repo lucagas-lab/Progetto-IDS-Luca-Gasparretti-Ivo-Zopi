@@ -94,7 +94,7 @@ public class HackathonBoundary {
         }
     }
 
-    @GetMapping("/{id}/visualizza")
+    @GetMapping("/{id}/visualizzaHackathon")
     public ResponseEntity<Object> visualizzaHackathon(@PathVariable("id") Long idHackathon) {
         try {
             HackathonDTO hackathonDTO = gestoreHackathon.visualizzaHackathon(idHackathon);
@@ -104,7 +104,7 @@ public class HackathonBoundary {
         }
     }
 
-    @PreAuthorize("hasAuthority('ORGANIZZATORE')") // Solo chi organizza può modificare!
+    @PreAuthorize("hasAuthority('ORGANIZZATORE')")
     @PutMapping("/{id}/modifica")
     public ResponseEntity<Object> modificaHackathon(
             @PathVariable("id") Long idHackathon,
